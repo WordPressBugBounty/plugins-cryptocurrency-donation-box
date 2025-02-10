@@ -167,33 +167,28 @@ function cdbbc_wallet_html($modal = true)
     if (isset($settings['metamask_wallet']) && $settings['metamask_wallet'] == "1") {
         $contract_address .= ' <li class="cdbbc-wallet" id="metamask_wallet">
                             <div class="cdbbc-wallet-icon" ><img src="' . CDBBC_URL . 'assets/images/metamask.png" alt="metamask" ></div>
-                            <div class="cdbbc-wallet-title" >' . __("MetaMask", "cdbbc") . '</div>
+                            <div class="cdbbc-wallet-title" >' . __("MetaMask", "cryptocurrency-donation-box") . '</div>
                             </li>';
     }
     if (isset($settings['trust_wallet']) && $settings['trust_wallet'] == "1") {
         $contract_address .= '  <li class="cdbbc-wallet" id="trust_wallet">
                             <div class="cdbbc-wallet-icon" ><img src="' . CDBBC_URL . 'assets/images/trustwallet.png" alt="trustwallet" ></div>
-                            <div class="cdbbc-wallet-title" >' . __("Trust Wallet", "cdbbc") . '</div>
+                            <div class="cdbbc-wallet-title" >' . __("Trust Wallet", "cryptocurrency-donation-box") . '</div>
                             </li>';
     }
     if (isset($settings['binance_wallet']) && $settings['binance_wallet'] == "1") {
         $contract_address .= ' <li class="cdbbc-wallet" id="Binance_wallet">
                             <div class="cdbbc-wallet-icon" ><img src="' . CDBBC_URL . 'assets/images/binancewallet.png" alt="binancewallet" ></div>
-                            <div class="cdbbc-wallet-title" >' . __("Binance Wallet", "cdbbc") . '</div>
+                            <div class="cdbbc-wallet-title" >' . __("Binance Wallet", "cryptocurrency-donation-box") . '</div>
                             </li>';
     }
     if (isset($settings['wallet_connect']) && $settings['wallet_connect'] == "1") {
         $contract_address .= ' <li class="cdbbc-wallet" id="wallet_connect">
                             <div class="cdbbc-wallet-icon" ><img src="' . CDBBC_URL . 'assets/images/walletconnect.png" alt="walletconnect" ></div>
-                            <div class="cdbbc-wallet-title" >' . __("WalletConnect", "cdbbc") . '</div>
+                            <div class="cdbbc-wallet-title" >' . __("WalletConnect", "cryptocurrency-donation-box") . '</div>
                             </li>';
     }
-    // if (isset($settings['qr']) && $settings['qr'] == "1") {
-    //     $contract_address .= ' <li class="cdbbc-wallet" id="qr">
-    //                         <div class="cdbbc-wallet-icon" ><img src="' . CDBBC_URL . 'assets/images/walletconnect.png" alt="walletconnect" ></div>
-    //                         <div class="cdbbc-wallet-title" >' . __("WalletConnect", "cdbbc") . '</div>
-    //                         </li>';
-    // }
+   
     $contract_address .= '</ul></div></div>';
     return $contract_address;
 }
@@ -564,36 +559,36 @@ function cdbbc_const_messages()
     $messages = "";
 
     $messages = array(
-        'metamask_wallet' => __(" MetaMask Wallet", "cdbbc"),
-        'trust_wallet' => __("Trust Wallet", "cdbbc"),
-        'binance_wallet' => __("Binance Wallet", "cdbbc"),
-        'wallet_connect' => __(" Wallet Connect", "cdbbc"),
-        // 'qr' => __("QR Code", "cdbbc"),
-        'click_here' => __("Click Here", "cdbbc"),
-        'extention_not_detected' => __("extention not detected", "cdbbc"),
-        'connection_establish' => __("Please wait while connection establish", "cdbbc"),
-        'user_rejected_the_request' => __("User rejected the request", "cdbbc"),
-        'donate_using' => __("Donate Using ", "cdbbc"),
-        'enter_amount' => __("Please Enter Amount", "cdbbc"),
-        'valid_amount' => __("Please Enter Valid Amount", "cdbbc"),
-        'valid_email' => __("Please Enter Valid Email", "cdbbc"),
-        'enter_email' => __("Please Enter Email", "cdbbc"),
-        'switch_to' => __("Please switch to", "cdbbc"),
-        'to_pay' => __("to pay", "cdbbc"),
-        'confirm_transaction' => __("Confirm this transaction from the wallet", "cdbbc"),
-        'transaction_process' => __("Transaction in Process ! Please Wait", "cdbbc"),
-        'transaction_completed' => __("Transaction Completed Successfully !", "cdbbc"),
-        'transaction_rejected' => __("Transaction Rejected", "cdbbc"),
-        'invalid_recever' => __("Invalid Recever Address", "cdbbc"),
-        'network_switching' => __("Network Switching in Process Please Wait!", "cdbbc"),
-        'adding_connect' => __("Adding Network in Process Please Wait!", "cdbbc"),
-        'insufficient_balance' => __("Insufficient Balance", "cdbbc"),
-        "terms_condition" => __('I agree with the site\'s&nbsp<a href= admin_url() . "admin.php?page=cdbbc-crypto-donations#tab=terms-conditions" target="_blank"> Terms & Conditions</a>.', "cdbbc"),
-        "infura_msg" => __("Infura project id is required for WalletConnect to work", "cdbbc"),
-        "select_currency" => __("Select Currency", "cdbbc"),
-        "select_network" => __("Select Network", "cdbbc"),
-        "enter_amount_lbl" => __("Enter Amount", "cdbbc"),
-        "enter_email" => __("Email to receive payment confirmation", "cdbbc"),
+        'metamask_wallet' => __(" MetaMask Wallet", "cryptocurrency-donation-box"),
+        'trust_wallet' => __("Trust Wallet", "cryptocurrency-donation-box"),
+        'binance_wallet' => __("Binance Wallet", "cryptocurrency-donation-box"),
+        'wallet_connect' => __(" Wallet Connect", "cryptocurrency-donation-box"),
+        // 'qr' => __("QR Code", "cryptocurrency-donation-box"),
+        'click_here' => __("Click Here", "cryptocurrency-donation-box"),
+        'extention_not_detected' => __("extention not detected", "cryptocurrency-donation-box"),
+        'connection_establish' => __("Please wait while connection establish", "cryptocurrency-donation-box"),
+        'user_rejected_the_request' => __("User rejected the request", "cryptocurrency-donation-box"),
+        'donate_using' => __("Donate Using ", "cryptocurrency-donation-box"),
+        'enter_amount' => __("Please Enter Amount", "cryptocurrency-donation-box"),
+        'valid_amount' => __("Please Enter Valid Amount", "cryptocurrency-donation-box"),
+        'valid_email' => __("Please Enter Valid Email", "cryptocurrency-donation-box"),
+        'enter_email' => __("Please Enter Email", "cryptocurrency-donation-box"),
+        'switch_to' => __("Please switch to", "cryptocurrency-donation-box"),
+        'to_pay' => __("to pay", "cryptocurrency-donation-box"),
+        'confirm_transaction' => __("Confirm this transaction from the wallet", "cryptocurrency-donation-box"),
+        'transaction_process' => __("Transaction in Process ! Please Wait", "cryptocurrency-donation-box"),
+        'transaction_completed' => __("Transaction Completed Successfully !", "cryptocurrency-donation-box"),
+        'transaction_rejected' => __("Transaction Rejected", "cryptocurrency-donation-box"),
+        'invalid_recever' => __("Invalid Recever Address", "cryptocurrency-donation-box"),
+        'network_switching' => __("Network Switching in Process Please Wait!", "cryptocurrency-donation-box"),
+        'adding_connect' => __("Adding Network in Process Please Wait!", "cryptocurrency-donation-box"),
+        'insufficient_balance' => __("Insufficient Balance", "cryptocurrency-donation-box"),
+        "terms_condition" => __('I agree with the site\'s&nbsp<a href= admin_url() . "admin.php?page=cdbbc-crypto-donations#tab=terms-conditions" target="_blank"> Terms & Conditions</a>.', "cryptocurrency-donation-box"),
+        "infura_msg" => __("Infura project id is required for WalletConnect to work", "cryptocurrency-donation-box"),
+        "select_currency" => __("Select Currency", "cryptocurrency-donation-box"),
+        "select_network" => __("Select Network", "cryptocurrency-donation-box"),
+        "enter_amount_lbl" => __("Enter Amount", "cryptocurrency-donation-box"),
+        "enter_email" => __("Email to receive payment confirmation", "cryptocurrency-donation-box"),
     );
     return $messages;
 

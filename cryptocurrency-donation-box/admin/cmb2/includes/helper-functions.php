@@ -104,7 +104,7 @@ function cmb2_get_oembed( $args = array() ) {
 
 	$error = sprintf(
 		/* translators: 1: results for. 2: link to codex.wordpress.org/Embeds */
-		esc_html__( 'No oEmbed Results Found for %1$s. View more info at %2$s.', 'cmb2' ),
+		esc_html__( 'No oEmbed Results Found for %1$s. View more info at %2$s.', 'cryptocurrency-donation-box' ),
 		$oembed['fallback'],
 		'<a href="https://wordpress.org/support/article/embeds/" target="_blank">codex.wordpress.org/Embeds</a>'
 	);
@@ -126,9 +126,10 @@ function cmb2_get_oembed( $args = array() ) {
  * @param array $args oEmbed args.
  */
 function cmb2_do_oembed( $args = array() ) {
-	echo cmb2_get_oembed( $args );
+    echo wp_kses_post( cmb2_get_oembed( $args ) );
 }
 add_action( 'cmb2_do_oembed', 'cmb2_do_oembed' );
+
 
 /**
  * A helper function to get an option from a CMB2 options array
@@ -305,7 +306,7 @@ function cmb2_print_metabox_form( $meta_box, $object_id = 0, $args = array() ) {
 
 	$args = wp_parse_args( $args, array(
 		'form_format' => '<form class="cmb-form" method="post" id="%1$s" enctype="multipart/form-data" encoding="multipart/form-data"><input type="hidden" name="object_id" value="%2$s">%3$s<input type="submit" name="submit-cmb" value="%4$s" class="button-primary"></form>',
-		'save_button' => esc_html__( 'Save', 'cmb2' ),
+		'save_button' => esc_html__( 'Save', 'cryptocurrency-donation-box' ),
 		'object_type' => $cmb->mb_object_type(),
 		'cmb_styles'  => $cmb->prop( 'cmb_styles' ),
 		'enqueue_js'  => $cmb->prop( 'enqueue_js' ),
@@ -341,11 +342,11 @@ function cmb2_print_metabox_form( $meta_box, $object_id = 0, $args = array() ) {
 	$format_parts = explode( '%3$s', $form_format );
 
 	// Show cmb form.
-	printf( $format_parts[0], esc_attr( $cmb->cmb_id ), esc_attr( $object_id ) );
+	printf( esc_html( $format_parts[0] ), esc_attr( $cmb->cmb_id ), esc_attr( $object_id ) );
 	$cmb->show_form();
 
 	if ( isset( $format_parts[1] ) && $format_parts[1] ) {
-		printf( str_ireplace( '%4$s', '%1$s', $format_parts[1] ), esc_attr( $args['save_button'] ) );
+		printf( str_ireplace( '%4$s', '%1$s', esc_html( $format_parts[1] ) ), esc_attr( $args['save_button'] ) );
 	}
 
 }
@@ -390,7 +391,16 @@ if ( ! function_exists( 'date_create_from_format' ) ) {
 		 * %Y, %m and %d correspond to date()'s Y m and d.
 		 * %I corresponds to H, %M to i and %p to a
 		 */
-		$parsed_time = strptime( $date_value, $schedule_format );
+		// $parsed_time = strptime( $date_value, $schedule_format );
+		$date = DateTime::createFromFormat($schedule_format, $date_value);
+		$parsed_time = $date ? [
+			'tm_year' => $date->format('Y') - 1900,
+			'tm_mon'  => $date->format('m') - 1,
+			'tm_mday' => $date->format('d'),
+			'tm_hour' => $date->format('H'),
+			'tm_min'  => $date->format('i'),
+			'tm_sec'  => $date->format('s'),
+		] : false;
 
 		$ymd = sprintf(
 			/**

@@ -145,7 +145,7 @@ class JWT
         // token can actually be used. If it's not yet that time, abort.
         if (isset($payload->nbf) && $payload->nbf > ($timestamp + static::$leeway)) {
             throw new BeforeValidException(
-                'Cannot handle token prior to ' . \date(DateTime::ISO8601, $payload->nbf)
+                esc_html__('Cannot handle token prior to ', 'cryptocurrency-donation-box') . esc_html(gmdate(DateTime::ISO8601, $payload->nbf))
             );
         }
 
@@ -154,7 +154,7 @@ class JWT
         // correctly used the nbf claim).
         if (isset($payload->iat) && $payload->iat > ($timestamp + static::$leeway)) {
             throw new BeforeValidException(
-                'Cannot handle token prior to ' . \date(DateTime::ISO8601, $payload->iat)
+                esc_html__('Cannot handle token prior to ', 'cryptocurrency-donation-box') . esc_html(gmdate(DateTime::ISO8601, $payload->iat))
             );
         }
 
@@ -258,7 +258,7 @@ class JWT
                     $key = base64_decode((string) end($lines));
                     return sodium_crypto_sign_detached($msg, $key);
                 } catch (Exception $e) {
-                    throw new DomainException($e->getMessage(), 0, $e);
+                    throw new DomainException(esc_html($e->getMessage()), 0, $e);
                 }
         }
 
@@ -299,8 +299,9 @@ class JWT
                 }
                 // returns 1 on success, 0 on failure, -1 on error.
                 throw new DomainException(
-                    'OpenSSL error: ' . \openssl_error_string()
+                    esc_html__('OpenSSL error: ', 'cryptocurrency-donation-box') . esc_html(\openssl_error_string())
                 );
+                
             case 'sodium_crypto':
               if (!function_exists('sodium_crypto_sign_verify_detached')) {
                   throw new DomainException('libsodium is not available');
@@ -314,7 +315,7 @@ class JWT
                   $key = base64_decode((string) end($lines));
                   return sodium_crypto_sign_verify_detached($signature, $msg, $key);
               } catch (Exception $e) {
-                  throw new DomainException($e->getMessage(), 0, $e);
+                  throw new DomainException(esc_html($e->getMessage()), 0, $e);
               }
             case 'hash_hmac':
             default:
@@ -484,8 +485,8 @@ class JWT
         ];
         throw new DomainException(
             isset($messages[$errno])
-            ? $messages[$errno]
-            : 'Unknown JSON error: ' . $errno
+            ? esc_html($messages[$errno])
+            : esc_html__('Unknown JSON error: ', 'cryptocurrency-donation-box') . intval($errno)
         );
     }
 

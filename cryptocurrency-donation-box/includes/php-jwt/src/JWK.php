@@ -102,7 +102,7 @@ class JWK
                 $publicKey = \openssl_pkey_get_public($pem);
                 if (false === $publicKey) {
                     throw new DomainException(
-                        'OpenSSL error: ' . \openssl_error_string()
+                        esc_html__('OpenSSL error: ', 'cryptocurrency-donation-box') . esc_html(\openssl_error_string())
                     );
                 }
                 return new Key($publicKey, $jwk['alg']);

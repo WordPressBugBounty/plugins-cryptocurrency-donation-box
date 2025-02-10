@@ -1,21 +1,19 @@
-=== Cryptocurrency Payment & Donation Box - Accept Payments in any Cryptocurrency on your WP Site for Free ===
+=== Cryptocurrency Donation Box - Bitcoin & Crypto Donations ===
 Contributors: blackworks1
-Tags: cryptocurrency, crypto, bitcoin, donation, TUSD,metamask,pay with meta mask, donate ethereum, donate bitcoin, elementor, Payment, Pay, Ethereum, Mobile, Fundraising, QR code, Token payment, Widget, Bitcoin Cash, Litecoin, Cardano, USDT
-Requires at least:4.5
-Tested up to:6.1
+Tags: cryptocurrency, bitcoin, donation, metamask, ethereum
+Requires at least: 4.5
+Tested up to: 6.7
 Requires PHP: 5.6
 License: GPL2
-Stable tag: 2.2.12
+Stable tag: 2.2.13
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Create a cryptocurrency donation box to quickly and easily accept crypto payments on your WordPress site. The Cryptocurrency Donation Box is by far the best bitcoin & crypto payment and donation plugin available and it is totally free!
-
+Accept crypto payments and donations on your WordPress site easily with this free cryptocurrency donation box plugin
 == Description ==
 
-### 🌟 CRYPTOCURRENCY PAYMENT & DONATION BOX
+### 🌟 CRYPTOCURRENCY DONATION BOX
 
 Accept cryptocurrency payments and cryptocurrency donations on your WordPress website using this free Cryptocurrency Payment and Donation Box crypto widget for WordPress.
-
 Add your wallet address and use the shortcode on any page, post, or sidebar – it can be placed anywhere on your site.
 
 <pre>[crypto-donation-box]</pre>
@@ -45,7 +43,40 @@ Check out our tutorial video below:
 5. Cryptocurrency Payment & Donation  Box style settings.
 6. Cryptocurrency Payment & Donation Box plugin-supported wallets.
 
+== External Services ==
+This plugin interacts with the following third-party/external services to enable its features:
+
+1. **MetaLocker Service**
+   - **Purpose**: This service is used to manage plugin activation and validate API keys.
+   - **Data Sent**: Admin email is sent when the plugin is activated.
+   - **Data Received**: Activation status and API key validation response.
+   - **Service Provider**: MetaPlugins
+   - **Service URL**: [https://metalocker.service.metaplugins.io](https://metalocker.service.metaplugins.io)
+   - **Terms of Service**: [Link to ToS](https://metalocker.service.metaplugins.io/terms)
+   - **Privacy Policy**: [Link to Privacy Policy](https://metalocker.service.metaplugins.io/privacy)
+
+2. **Binance Smart Chain**
+   - **Purpose**: Fetches blockchain data for processing cryptocurrency payments.
+   - **Data Sent**: None directly from users; RPC nodes may log network requests (wallet address, etc.).
+   - **Service URLs**:
+     - Binance Smart Chain Mainnet: [https://bsc-dataseed.binance.org/](https://bsc-dataseed.binance.org/)
+     - Binance Smart Chain Testnet: [https://data-seed-prebsc-1-s1.binance.org:8545/](https://data-seed-prebsc-1-s1.binance.org:8545/)
+   - **Terms of Service**: [Binance ToS](https://www.binance.org/en/terms)
+   - **Privacy Policy**: [Binance Privacy Policy](https://www.binance.org/en/privacy)
+
+3. **Nodesmith API**
+   - **Purpose**: Used to interact with Ethereum-based networks for retrieving wallet and transaction data.
+   - **Data Sent**: Network requests may include wallet address, token data, and transaction info.
+   - **Service URLs**:
+     - Ethereum Mainnet: [https://ethereum.api.nodesmith.io/v1/mainnet/jsonrpc](https://ethereum.api.nodesmith.io/v1/mainnet/jsonrpc)
+     - Ethereum Ropsten Testnet: [https://ethereum.api.nodesmith.io/v1/ropsten/jsonrpc](https://ethereum.api.nodesmith.io/v1/ropsten/jsonrpc)
+   - **Terms of Service**: [Nodesmith ToS](https://www.nodesmith.io/terms)
+   - **Privacy Policy**: [Nodesmith Privacy Policy](https://www.nodesmith.io/privacy)
+
+
 == Changelog ==
+= Version 2.2.13 | 06 Feb 2025 =
+<pre>
 = Version 2.2.12 | 13 July 2024 =
 <pre>
 Updated: Wordpress version with certain code fixes.

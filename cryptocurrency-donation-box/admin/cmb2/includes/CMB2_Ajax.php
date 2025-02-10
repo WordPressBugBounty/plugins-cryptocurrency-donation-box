@@ -61,44 +61,49 @@ class CMB2_Ajax {
 	 * @return mixed oEmbed embed code | fallback | error message
 	 */
 	public function oembed_handler() {
-
 		// Verify our nonce.
-		if ( ! ( isset( $_REQUEST['cmb2_ajax_nonce'], $_REQUEST['oembed_url'] ) && wp_verify_nonce( $_REQUEST['cmb2_ajax_nonce'], 'ajax_nonce' ) ) ) {
-			die();
+		if ( ! ( isset( $_REQUEST['cmb2_ajax_nonce'], $_REQUEST['oembed_url'] ) && wp_verify_nonce( sanitize_text_field( $_REQUEST['cmb2_ajax_nonce'] ), 'ajax_nonce' ) ) ) {
+			wp_send_json_error( '<p class="ui-state-error-text">' . esc_html__( 'Nonce verification failed.', 'cryptocurrency-donation-box' ) . '</p>' );
 		}
-
-		// Sanitize our search string.
+	
+		// Sanitize and validate our input.
 		$oembed_string = sanitize_text_field( $_REQUEST['oembed_url'] );
-
+	
 		// Send back error if empty.
 		if ( empty( $oembed_string ) ) {
-			wp_send_json_error( '<p class="ui-state-error-text">' . esc_html__( 'Please Try Again', 'cmb2' ) . '</p>' );
+			wp_send_json_error( '<p class="ui-state-error-text">' . esc_html__( 'Please enter a valid URL.', 'cryptocurrency-donation-box' ) . '</p>' );
 		}
-
-		// Set width of embed.
-		$embed_width = isset( $_REQUEST['oembed_width'] ) && intval( $_REQUEST['oembed_width'] ) < 640 ? intval( $_REQUEST['oembed_width'] ) : '640';
-
-		// Set url.
-		$oembed_url = esc_url( $oembed_string );
-
+	
+		// Set width of embed (ensure it's always a valid integer).
+		$embed_width = isset( $_REQUEST['oembed_width'] ) ? max( 1, min( 640, intval( $_REQUEST['oembed_width'] ) ) ) : 640;
+	
+		// Sanitize the URL.
+		$oembed_url = esc_url_raw( $oembed_string );
+	
 		// Set args.
 		$embed_args = array(
 			'width' => $embed_width,
 		);
-
+	
 		$this->ajax_update = true;
-
+	
+		// Get sanitized values for other request parameters.
+		$object_id = isset( $_REQUEST['object_id'] ) ? intval( $_REQUEST['object_id'] ) : 0;
+		$object_type = isset( $_REQUEST['object_type'] ) ? sanitize_key( $_REQUEST['object_type'] ) : 'post';
+		$field_id = isset( $_REQUEST['field_id'] ) ? sanitize_key( $_REQUEST['field_id'] ) : '';
+	
 		// Get embed code (or fallback link).
 		$html = $this->get_oembed( array(
 			'url'         => $oembed_url,
-			'object_id'   => $_REQUEST['object_id'],
-			'object_type' => isset( $_REQUEST['object_type'] ) ? $_REQUEST['object_type'] : 'post',
+			'object_id'   => $object_id,
+			'object_type' => $object_type,
 			'oembed_args' => $embed_args,
-			'field_id'    => $_REQUEST['field_id'],
+			'field_id'    => $field_id,
 		) );
-
+	
 		wp_send_json_success( $html );
 	}
+	
 
 	/**
 	 * Retrieves oEmbed from url/object ID
@@ -178,7 +183,7 @@ class CMB2_Ajax {
 
 		// Send back our embed.
 		if ( $oembed['embed'] && $oembed['embed'] != $oembed['fallback'] ) {
-			return '<div class="cmb2-oembed embed-status">' . $oembed['embed'] . '<p class="cmb2-remove-wrapper"><a href="#" class="cmb2-remove-file-button" rel="' . $oembed['args']['field_id'] . '">' . esc_html__( 'Remove Embed', 'cmb2' ) . '</a></p></div>';
+			return '<div class="cmb2-oembed embed-status">' . $oembed['embed'] . '<p class="cmb2-remove-wrapper"><a href="#" class="cmb2-remove-file-button" rel="' . $oembed['args']['field_id'] . '">' . esc_html__( 'Remove Embed', 'cryptocurrency-donation-box' ) . '</a></p></div>';
 		}
 
 		// Otherwise, send back error info that no oEmbeds were found.
@@ -186,7 +191,7 @@ class CMB2_Ajax {
 			'<p class="ui-state-error-text">%s</p>',
 			sprintf(
 				/* translators: 1: results for. 2: link to codex.wordpress.org/Embeds */
-				esc_html__( 'No oEmbed Results Found for %1$s. View more info at %2$s.', 'cmb2' ),
+				esc_html__( 'No oEmbed Results Found for %1$s. View more info at %2$s.', 'cryptocurrency-donation-box' ),
 				$oembed['fallback'],
 				'<a href="https://wordpress.org/support/article/embeds/" target="_blank">codex.wordpress.org/Embeds</a>'
 			)

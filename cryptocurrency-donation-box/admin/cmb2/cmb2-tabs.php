@@ -61,15 +61,15 @@ if( !class_exists( 'CMB2_Tabs' ) ) {
                             $fields_selector = apply_filters( 'cmb2_tabs_tab_' . $tab['id'] . '_fields_selector', $fields_selector, $tab, $cmb_id, $object_id, $object_type, $cmb );
                             ?>
 
-                            <div id="<?php echo $cmb_id . '-tab-' . $tab['id']; ?>" class="cmb-tab" data-fields="<?php echo implode( ', ', $fields_selector ); ?>">
+                            <div id="<?php echo esc_attr( $cmb_id . '-tab-' . $tab['id'] ); ?>"  class="cmb-tab" data-fields="<?php echo esc_attr( implode( ', ', $fields_selector ) ); ?>">
 
                                 <?php if( isset( $tab['icon'] ) && ! empty( $tab['icon'] ) ) :
                                     $tab['icon'] = strpos($tab['icon'], 'dashicons') !== false ? 'dashicons ' . $tab['icon'] : $tab['icon']?>
-                                    <span class="cmb-tab-icon"><i class="<?php echo $tab['icon']; ?>"></i></span>
+                                    <span class="cmb-tab-icon"><i class="<?php echo esc_attr( $tab['icon'] ); ?>"></i></span>
                                 <?php endif; ?>
 
                                 <?php if( isset( $tab['title'] ) && ! empty( $tab['title'] ) ) : ?>
-                                    <span class="cmb-tab-title"><?php echo $tab['title']; ?></span>
+                                    <span class="cmb-tab-title"><?php echo esc_html( $tab['title'] ); ?></span>
                                 <?php endif; ?>
                             </div>
                         <?php endforeach; ?>

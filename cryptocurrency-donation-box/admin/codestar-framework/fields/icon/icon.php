@@ -17,8 +17,8 @@ if ( ! class_exists( 'CSF_Field_icon' ) ) {
     public function render() {
 
       $args = wp_parse_args( $this->field, array(
-        'button_title' => esc_html__( 'Add Icon', 'csf' ),
-        'remove_title' => esc_html__( 'Remove Icon', 'csf' ),
+        'button_title' => esc_html__( 'Add Icon', 'cryptocurrency-donation-box' ),
+        'remove_title' => esc_html__( 'Remove Icon', 'cryptocurrency-donation-box' ),
       ) );
 
       echo $this->field_before();
@@ -50,11 +50,11 @@ if ( ! class_exists( 'CSF_Field_icon' ) ) {
             <div class="csf-modal-overlay"></div>
             <div class="csf-modal-inner">
               <div class="csf-modal-title">
-                <?php esc_html_e( 'Add Icon', 'csf' ); ?>
+                <?php esc_html_e( 'Add Icon', 'cryptocurrency-donation-box' ); ?>
                 <div class="csf-modal-close csf-icon-close"></div>
               </div>
               <div class="csf-modal-header">
-                <input type="text" placeholder="<?php esc_html_e( 'Search...', 'csf' ); ?>" class="csf-icon-search" />
+                <input type="text" placeholder="<?php esc_html_e( 'Search...', 'cryptocurrency-donation-box' ); ?>" class="csf-icon-search" />
               </div>
               <div class="csf-modal-content">
                 <div class="csf-modal-loading"><div class="csf-loading"></div></div>

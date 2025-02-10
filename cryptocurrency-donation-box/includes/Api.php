@@ -97,8 +97,15 @@ final class CdbbcMetaApi
             ]);
 
             if (!$rsa_key) {
-                throw new Exception(sprintf(__('Unable to setup the private key. %s. Please try activating the plugin again!', 'meta-auth'), openssl_error_string()));
+                throw new Exception(
+                    sprintf(
+                        /* translators: %s is an error message from OpenSSL. */
+                        __('Unable to set up the private key. %s. Please try activating the plugin again!', 'cryptocurrency-donation-box'),
+                        esc_html(openssl_error_string())
+                    )
+                );
             }
+            
 
             $public_key = openssl_pkey_get_details($rsa_key)['key'];
 
@@ -143,9 +150,13 @@ final class CdbbcMetaApi
      */
     public static function getAuthKey($request)
     {
-        preg_match('/Bearer\s(\S+)/', $_SERVER['HTTP_AUTHORIZATION'], $matches);
-
-        return empty($matches[1]) ? '' : $matches[1];
+        $authorization = isset($_SERVER['HTTP_AUTHORIZATION']) ? wp_unslash($_SERVER['HTTP_AUTHORIZATION']) : '';
+    
+        if (!empty($authorization) && preg_match('/Bearer\s(\S+)/', $authorization, $matches)) {
+            return sanitize_text_field($matches[1]); // Ensure the token is sanitized
+        }
+    
+        return '';
     }
 
     /**
@@ -199,35 +210,54 @@ final class CdbbcMetaApi
      * @param array $params
      * @return array
      */
-    public static function request($endpoint, $method, array $params, $auth = false, $timeout = 60,$passedHeaders=[])
+    public static function request($endpoint, $method, array $params = [], $auth = false, $timeout = 60, $passedHeaders = [])
     {
-        $curl = curl_init(self::BASE_URL . $endpoint);
-
-        $headers = ['Accept: application/json', 'User-Agent: MetaPlugins'];
-        $headers= array_merge($headers,$passedHeaders);
+        $url = self::BASE_URL . $endpoint;
+        $headers = [
+            'Accept'     => 'application/json',
+            'User-Agent' => 'MetaPlugins',
+        ];
+    
+        $headers = array_merge($headers, $passedHeaders);
 
         if ($auth) {
-            $headers[] = 'Authorization: Bearer ' . $auth;
+            $headers['Authorization'] = 'Bearer ' . $auth;
         }
 
-        curl_setopt($curl, CURLOPT_TIMEOUT, $timeout);
-        curl_setopt($curl, CURLOPT_CUSTOMREQUEST, $method);
-        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-
-        if (!empty($params)) {
-            $headers[] = 'Content-Type: application/json';
-            curl_setopt($curl, CURLOPT_POSTFIELDS, json_encode($params));
+        $args = [
+            'method'  => $method, // GET, POST, PUT, DELETE
+            'timeout' => $timeout,
+            'headers' => $headers,
+        ];
+        if (!empty($params) && is_array($params)) {
+            if ($method === 'GET') {
+                // For GET requests, ensure params are correctly formatted in the query string
+                $url = add_query_arg($params, $url);
+            } else {
+                // For POST/PUT requests, encode params as JSON
+                $args['body'] = wp_json_encode($params);
+                $args['headers']['Content-Type'] = 'application/json';
+            }
         }
-
-        curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
-
-        $resp = curl_exec($curl);
-        $code = curl_getinfo($curl, CURLINFO_HTTP_CODE);
-
-        curl_close($curl);
-
-        return ['status' => $code, 'body' => $resp];
+        $response = wp_remote_request($url, $args);
+        if (is_wp_error($response)) {
+            return [
+                'status' => 'error',
+                'body'   => $response->get_error_message(),
+            ];
+        }
+    
+        // Get the HTTP status code and response body
+        $code = wp_remote_retrieve_response_code($response);
+        $body = wp_remote_retrieve_body($response);    
+        return [
+            'status' => $code,
+            'body'   => $body,
+        ];
     }
+    
+    
+    
 
     /**
      * Create a Bearer token for authorization

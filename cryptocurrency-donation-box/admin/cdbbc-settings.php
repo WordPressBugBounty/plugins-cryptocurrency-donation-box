@@ -51,9 +51,9 @@ class CDBBC_option_settings
         'id' => $prefix . 'group_data',
         'type' => 'group',
         'options' => array(
-            'group_title' => __('Wallet', 'your-text-domain') . ' {#}', // {#} gets replaced by row number
-            'add_button' => __('Add New Wallet', 'your-text-domain'),
-            'remove_button' => __('Remove Wallet', 'your-text-domain'),
+            'group_title' => __('Wallet', 'cryptocurrency-donation-box') . ' {#}', // {#} gets replaced by row number
+            'add_button' => __('Add New Wallet', 'cryptocurrency-donation-box'),
+            'remove_button' => __('Remove Wallet', 'cryptocurrency-donation-box'),
             'sortable' => true, // beta
             'closed' => true,
         ),
@@ -64,14 +64,14 @@ class CDBBC_option_settings
         'id' => 'coin_type',
         'type' => 'radio_inline',
         'options' => array(
-            'popular' => __('Popular wallet/coin', 'cmb2'),
-            'custom' => __('Custom wallet/coin ', 'cmb2'),
+            'popular' => __('Popular wallet/coin', 'cryptocurrency-donation-box'),
+            'custom' => __('Custom wallet/coin ', 'cryptocurrency-donation-box'),
 
         ),
         'default' => 'popular',
         ));
         $gernal_tab->add_group_field($group_repeat_test, array(
-        'name' => __('Select wallet, coin or token', 'cmc2'),
+        'name' => __('Select wallet, coin or token', 'cryptocurrency-donation-box'),
         'desc' => '',
         'id' => 'coin',
         'type' => 'select',
@@ -86,7 +86,7 @@ class CDBBC_option_settings
         ));
 
         // $gernal_tab->add_group_field($group_repeat_test, array(
-        // 'name' => __('Enter address', 'cmc2'),
+        // 'name' => __('Enter address', 'cryptocurrency-donation-box'),
         // 'desc' => '',
         // 'id' => 'wallet_address',
         // 'attributes' => array(
@@ -99,7 +99,7 @@ class CDBBC_option_settings
         // ));
 
         $gernal_tab->add_group_field($group_repeat_test, array(
-        'name' => __('Tag/Note (if any)', 'cmc2'),
+        'name' => __('Tag/Note (if any)', 'cryptocurrency-donation-box'),
         'desc' => '',
         'id' => 'tag_note',
         'attributes' => array(
@@ -112,7 +112,7 @@ class CDBBC_option_settings
         ));
 
         $gernal_tab->add_group_field($group_repeat_test, array(
-        'name' => __('Coin Name', 'cmc2'),
+        'name' => __('Coin Name', 'cryptocurrency-donation-box'),
         'desc' => '',
         'id' => 'coin_name',
         'attributes' => array(
@@ -126,7 +126,7 @@ class CDBBC_option_settings
 
         ));
         $gernal_tab->add_group_field($group_repeat_test, array(
-        'name' => __('Coin Symbol', 'cmc2'),
+        'name' => __('Coin Symbol', 'cryptocurrency-donation-box'),
         'desc' => '',
         'id' => 'coin_symbol',
         'attributes' => array(
@@ -139,7 +139,7 @@ class CDBBC_option_settings
 
         ));
         $gernal_tab->add_group_field($group_repeat_test, array(
-        'name' => __('Coin Id', 'cmc2'),
+        'name' => __('Coin Id', 'cryptocurrency-donation-box'),
         'desc' => '',
         'id' => 'coin_id',
         'attributes' => array(
@@ -154,7 +154,7 @@ class CDBBC_option_settings
         ));
 
         // $gernal_tab->add_group_field($group_repeat_test, array(
-        // 'name' => __('Enter Wallet address', 'cmc2'),
+        // 'name' => __('Enter Wallet address', 'cryptocurrency-donation-box'),
         // 'desc' => '',
         // 'id' => 'wallet_address_custom',
         // 'attributes' => array(
@@ -168,7 +168,7 @@ class CDBBC_option_settings
         // ));
 
         $gernal_tab->add_group_field($group_repeat_test, array(
-        'name' => __('Tag/Note:', 'cmc2'),
+        'name' => __('Tag/Note:', 'cryptocurrency-donation-box'),
         'desc' => '',
         'id' => 'tag_note_custom',
         'attributes' => array(
@@ -234,13 +234,13 @@ class CDBBC_option_settings
         $extra_tab = new_cmb2_box($args);
 
         $extra_tab->add_field(array(
-        'name' => __('MetaMask wallet settings', 'cmc2'),
+        'name' => __('MetaMask wallet settings', 'cryptocurrency-donation-box'),
         'id' => 'metamask_settings_start',
         'type' => 'title',
 
         ));
         $extra_tab->add_field(array(
-        'name' => __('Default Amount', 'cmc2'),
+        'name' => __('Default Amount', 'cryptocurrency-donation-box'),
         'desc' => '',
         'id' => 'metamask_amount',
         'type' => 'text',
@@ -248,7 +248,7 @@ class CDBBC_option_settings
         'desc' => 'Enter default amount for MetaMask',
         ));
         $extra_tab->add_field(array(
-        'name' => __('MetaMask Title', 'cmc2'),
+        'name' => __('MetaMask Title', 'cryptocurrency-donation-box'),
         'desc' => '',
         'id' => 'metamask_title',
         'type' => 'text',
@@ -266,13 +266,13 @@ class CDBBC_option_settings
         ));
 
         $extra_tab->add_field(array(
-        'name' => __('Donation Box Content Settings', 'cmc2'),
+        'name' => __('Donation Box Content Settings', 'cryptocurrency-donation-box'),
         'id' => 'donation_settings_start',
         'type' => 'title',
 
         ));
         $extra_tab->add_field(array(
-        'name' => __('Main Title', 'cmc2'),
+        'name' => __('Main Title', 'cryptocurrency-donation-box'),
         'desc' => '',
         'id' => 'main_title',
         'type' => 'text',
@@ -288,7 +288,7 @@ class CDBBC_option_settings
         'default' => 'Scan the QR code or copy the address below into your wallet to send some [coin-name]([coin-symbol])',
         ));
         $extra_tab->add_field(array(
-        'name' => __('Donation Box Style Settings', 'cmc2'),
+        'name' => __('Donation Box Style Settings', 'cryptocurrency-donation-box'),
         'id' => 'donation_settings_style',
         'type' => 'title',
 
@@ -322,7 +322,7 @@ class CDBBC_option_settings
         ));
 
         $extra_tab->add_field(array(
-        'name' => __('Donation Box Shortcode Settings', 'cmc2'),
+        'name' => __('Donation Box Shortcode Settings', 'cryptocurrency-donation-box'),
         'id' => 'tab_shortcode',
         'type' => 'title',
         'desc' => '<br><br><strong>METAMASK SHORTCODE </strong><code>[crypto-donation-box type="metamask" show-coin="all"]</code>

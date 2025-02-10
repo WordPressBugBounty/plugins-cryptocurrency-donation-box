@@ -18,8 +18,8 @@ if ( ! class_exists( 'CSF_Field_sorter' ) ) {
 
       $args = wp_parse_args( $this->field, array(
         'disabled'       => true,
-        'enabled_title'  => esc_html__( 'Enabled', 'csf' ),
-        'disabled_title' => esc_html__( 'Disabled', 'csf' ),
+        'enabled_title'  => esc_html__( 'Enabled', 'cryptocurrency-donation-box' ),
+        'disabled_title' => esc_html__( 'Disabled', 'cryptocurrency-donation-box' ),
       ) );
 
       echo $this->field_before();

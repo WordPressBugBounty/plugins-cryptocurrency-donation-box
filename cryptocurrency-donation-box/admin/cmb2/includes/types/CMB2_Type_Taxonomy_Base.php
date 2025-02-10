@@ -100,11 +100,19 @@ abstract class CMB2_Type_Taxonomy_Base extends CMB2_Type_Multi_Base {
 			$args['parent'] = $this->parent;
 		}
 
-		$args = wp_parse_args( $this->field->prop( 'query_args', array() ), $args );
+		// $args = wp_parse_args( $this->field->prop( 'query_args', array() ), $args );
 
-		return CMB2_Utils::wp_at_least( '4.5.0' )
-			? get_terms( $args )
-			: get_terms( $this->field->args( 'taxonomy' ), http_build_query( $args ) );
+		// return CMB2_Utils::wp_at_least( '4.5.0' )
+		// 	? get_terms( $args )
+		// 	: get_terms( $this->field->args( 'taxonomy' ), http_build_query( $args ) );
+		$args = wp_parse_args( 
+			$this->field->prop( 'query_args', array() ), 
+			$args 
+		);
+		
+		// Use the modern get_terms() function.
+		return get_terms($args);	
+
 	}
 
 	protected function no_terms_result( $error, $tag = 'li' ) {
@@ -112,7 +120,7 @@ abstract class CMB2_Type_Taxonomy_Base extends CMB2_Type_Multi_Base {
 			$message = $error->get_error_message();
 			$data = 'data-error="' . esc_attr( $error->get_error_code() ) . '"';
 		} else {
-			$message = $this->_text( 'no_terms_text', esc_html__( 'No terms', 'cmb2' ) );
+			$message = $this->_text( 'no_terms_text', esc_html__( 'No terms', 'cryptocurrency-donation-box' ) );
 			$data = '';
 		}
 

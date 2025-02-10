@@ -38,7 +38,7 @@ donation box shortcode
             $coin_links = '';
             $list_view = '';
             $classic_list = '';
-            $tagvl = __('_tag', 'CDBBC');
+            $tagvl = __('_tag', 'cryptocurrency-donation-box');
             $i = 0;
             $active_tab = '';
             $design_type = $attr['type'];
@@ -70,15 +70,16 @@ donation box shortcode
                     "infura_id" => $infura_id,
                     "terms" => $termsconditiona,
                     "share_data_to_blackworks" => $share_data,
-                    "ajax" => home_url('/wp-admin/admin-ajax.php'),
+                    "ajax" => admin_url('admin-ajax.php'),
+                    // "ajax" => home_url('/wp-admin/admin-ajax.php'),
                     "nonce" => $nonce,
                     "const_msg" => cdbbc_const_messages(),
                     "wallet_logos" => array('metamask_wallet' => CDBBC_URL . 'assets/images/metamask.png', 'trust_wallet' => CDBBC_URL . 'assets/images/trustwallet.png', 'Binance_wallet' => CDBBC_URL . 'assets/images/binancewallet.png', 'wallet_connect' => CDBBC_URL . 'assets/images/walletconnect.png'),
                 )
             );
             $main_title = isset($donation_settings['tile_desc_settings']['main_title']) ? $donation_settings['tile_desc_settings']['main_title'] : "";
-            $wallet_title = isset($donation_settings['wallet_title_desc']['wallet_main_title']) ? $donation_settings['wallet_title_desc']['wallet_main_title'] : __('Donate Via Wallets', 'cdbbc');
-            $wallet_desc = isset($donation_settings['wallet_title_desc']['wallet_main_desc']) ? $donation_settings['wallet_title_desc']['wallet_main_desc'] : __('Select a wallet to accept donation in ETH BNB BUSD etc..', 'cdbbc');
+            $wallet_title = isset($donation_settings['wallet_title_desc']['wallet_main_title']) ? $donation_settings['wallet_title_desc']['wallet_main_title'] : __('Donate Via Wallets', 'cryptocurrency-donation-box');
+            $wallet_desc = isset($donation_settings['wallet_title_desc']['wallet_main_desc']) ? $donation_settings['wallet_title_desc']['wallet_main_desc'] : __('Select a wallet to accept donation in ETH BNB BUSD etc..', 'cryptocurrency-donation-box');
             $wallet_title_typo = isset($donation_settings['donation_wallet_style']['wallet_title_typo']) ? $donation_settings['donation_wallet_style']['wallet_title_typo'] : "";
 
             $wallet_title_color = (isset($wallet_title_typo['color']) && !empty($wallet_title_typo['color'])) ? '--wallet-title-font-color:' . $wallet_title_typo['color'] : "";
@@ -152,7 +153,7 @@ donation box shortcode
             }
             $contact_address = "";
             $metamask_wall_add = $recever;
-            $random_num = rand(1, 1000);
+            $random_num = wp_rand(1, 1000);
             $active_chain = "";
             $token_symbol = "";
             $name_symbol = "";
@@ -197,7 +198,7 @@ donation box shortcode
                         } else {
                             $active_tab = '';
                         }
-                        $coin_random = rand(1, 10000);
+                        $coin_random = wp_rand(1, 10000);
                         if (strpos($id, 'metamask') === false && strpos($id, 'wallets') === false) {
                             $title_content = str_replace('[coin-name]', $coin_name, $title);
                             $title_content = str_replace('[coin-symbol]', $coin_symbol, $title_content);
@@ -211,13 +212,13 @@ donation box shortcode
                         }
                         if ($design_type == 'popup') {
                             if ((strpos($id, 'metamask') === false) && strpos($id, 'wallets') === false) {
-                                $list_view .= '<li class="cdbbc-list-items"><a class="cdbbc-list-popup" href="#donate' . esc_attr($id) . $coin_random . '" rel="modal:open"><div class="cdb-list-img"><img src="' . esc_url($coin_logo) . '"></div><div class="cdb-list-content"><span class="cdb-list-donate-txt">' . __('Donate with', 'cdbbc') . '</span><span class="cdb-list-coin">' . esc_html($coin_name) . '</span></div></a></li>';
+                                $list_view .= '<li class="cdbbc-list-items"><a class="cdbbc-list-popup" href="#donate' . esc_attr($id) . $coin_random . '" rel="modal:open"><div class="cdb-list-img"><img src="' . esc_url($coin_logo) . '"></div><div class="cdb-list-content"><span class="cdb-list-donate-txt">' . __('Donate with', 'cryptocurrency-donation-box') . '</span><span class="cdb-list-coin">' . esc_html($coin_name) . '</span></div></a></li>';
                                 $list_view .= '<div id="donate' . esc_attr($id) . $coin_random . '" class="modal cdbbc_wrap_popup"><div class="cdbbc-main-title">';
                                 $list_view .= '<h2 class="cdbbc-title">' . wp_kses_post($title_content) . '</h2></div>';
                                 $list_view .= '<div class="cdbbc-modal-body"><div class="cdbbc-address">';
-                                $list_view .= '<div class="cdbbc-wallet" id="wallet_connect"><div class="cdbbc-wallet-icon" ><button class="cdbbc_btn">' . __('Reveal QR Code', 'cdbbc') . '</button></div></div></div><div class="cdbbc_qr_code"><img src="' . CDBBC_URL . '/assets/images/qr_blur.png" alt="Scan to Donate ' . $coin_name . '"/></div>';
+                                $list_view .= '<div class="cdbbc-wallet" id="wallet_connect"><div class="cdbbc-wallet-icon" ><button class="cdbbc_btn">' . __('Reveal QR Code', 'cryptocurrency-donation-box') . '</button></div></div></div><div class="cdbbc_qr_code"><img src="' . CDBBC_URL . '/assets/images/qr_blur.png" alt="Scan to Donate ' . $coin_name . '"/></div>';
                                 if (isset($tag_data) && !empty($tag_data)) {
-                                    $list_view .= '<div class="cdbbc_tag"><span class="cdbbc_tag_heading">' . __('Tag/Note:-', 'cdbbc') . ' </span><span class="cdbbc_tag_desc">' . wp_kses_post($tag_data) . '</span></div>';
+                                    $list_view .= '<div class="cdbbc_tag"><span class="cdbbc_tag_heading">' . __('Tag/Note:-', 'cryptocurrency-donation-box') . ' </span><span class="cdbbc_tag_desc">' . wp_kses_post($tag_data) . '</span></div>';
                                 }
                                 $list_view .= '</div></div>';
                             } else if ((strpos($id, 'metamask') === 0 || $WalletPopupStyle == true) && $pop_count == 1) {
@@ -229,7 +230,7 @@ donation box shortcode
                                     $list_view .= ' <div class="message"></div></div></div>';
                                     $pop_count++;
                                 } else {
-                                    $list_view .= '<h6>' . __('Please Add coin wallet address in plugin settings panel', 'cdbbc') . '</h6>';
+                                    $list_view .= '<h6>' . __('Please Add coin wallet address in plugin settings panel', 'cryptocurrency-donation-box') . '</h6>';
 
                                 }
                             }
@@ -240,9 +241,9 @@ donation box shortcode
                                 $classic_list .= '<div class="cdbbc_qr_code"><img src="' . CDBBC_URL . '/assets/images/qr_blur.png" alt="Scan to Donate ' . $coin_name . '"/>';
                                 $classic_list .= '</div><div class="cdbbc_classic_input_add">';
                                 $classic_list .= '<div class="cdbbc-modal-body"><div class="cdbbc-address">';
-                                $classic_list .= '<div class="cdbbc-wallet" id="wallet_connect"><div class="cdbbc-wallet-icon" ><button class="cdbbc_btn">' . esc_html__('Reveal QR Code', 'cdbbc') . '</button></div></div></div>';
+                                $classic_list .= '<div class="cdbbc-wallet" id="wallet_connect"><div class="cdbbc-wallet-icon" ><button class="cdbbc_btn">' . esc_html__('Reveal QR Code', 'cryptocurrency-donation-box') . '</button></div></div></div>';
                                 if (isset($tag_data) && !empty($tag_data)) {
-                                    $classic_list .= '<div class="cdbbc_tag"><span class="cdbbc_tag_heading">' . esc_html__('Tag/Note:-', 'cdbbc') . ' </span><span class="cdbbc_tag_desc">' . wp_kses_post($tag_data) . '</span></div>';
+                                    $classic_list .= '<div class="cdbbc_tag"><span class="cdbbc_tag_heading">' . esc_html__('Tag/Note:-', 'cryptocurrency-donation-box') . ' </span><span class="cdbbc_tag_desc">' . wp_kses_post($tag_data) . '</span></div>';
                                 }
                                 $classic_list .= '</li>';
                             } else if ((strpos($id, 'metamask') === 0 || $WalletListStyle == true) && $list_count == 1) {
@@ -252,7 +253,7 @@ donation box shortcode
                                     $classic_list .= '<div class="message"></div></li>';
                                     $list_count++;
                                 } else {
-                                    $classic_list .= '<h6>' . __('Please Add coin wallet address in plugin settings panel', 'cdbbc') . '</h6>';
+                                    $classic_list .= '<h6>' . __('Please Add coin wallet address in plugin settings panel', 'cryptocurrency-donation-box') . '</h6>';
 
                                 }
                             }
@@ -262,10 +263,10 @@ donation box shortcode
                                 $coin_tabs .= '<div class="cdbbc_qr_code"><img src="' . CDBBC_URL . '/assets/images/qr_blur.png" alt="Scan to Donate ' . $coin_name . '"/>';
                                 $coin_tabs .= '</div><div class="cdbbc_input_add"><h2 class="cdbbc-title">' . wp_kses_post($title_content) . '</h2><p class="cdbbc-desc">' . wp_kses_post($desc_content) . '</p>';
                                 if (isset($tag_data) && !empty($tag_data)) {
-                                    $coin_tabs .= '<div class="cdbbc_tag"><span class="cdbbc_tag_heading">' . __('Tag/Note:-', 'cdbbc') . ' </span><span class="cdbbc_tag_desc">' . wp_kses_post($tag_data) . '</span></div>';
+                                    $coin_tabs .= '<div class="cdbbc_tag"><span class="cdbbc_tag_heading">' . __('Tag/Note:-', 'cryptocurrency-donation-box') . ' </span><span class="cdbbc_tag_desc">' . wp_kses_post($tag_data) . '</span></div>';
                                 }
                                 $coin_tabs .= '<div class="cdbbc-modal-body"><div class="cdbbc-address">';
-                                $coin_tabs .= '<div class="cdbbc-wallet" id="wallet_connect"><div class="cdbbc-wallet-icon" ><button class="cdbbc_btn" data-clipboard-target="#' . esc_attr($id) . '-wallet-address' . $random_num . '">' . __('Reveal QR Code', 'cdbbc') . '</button></div></div></div></div></div>';
+                                $coin_tabs .= '<div class="cdbbc-wallet" id="wallet_connect"><div class="cdbbc-wallet-icon" ><button class="cdbbc_btn" data-clipboard-target="#' . esc_attr($id) . '-wallet-address' . $random_num . '">' . __('Reveal QR Code', 'cryptocurrency-donation-box') . '</button></div></div></div></div></div>';
                             }
                             $coin_tabs .= '</div>';
                         }
@@ -292,9 +293,9 @@ donation box shortcode
                             $output .= '<div class="cdbbc_wallet_tabs" data-random="' . $random_num . '">';
                             if (count($all_coin_wall_add) == 1) {
                             } else {
-                                $output .= '<span class="cdbbc_tab_btn active" id="donate_to_address' . $random_num . '"><img src="' . CDBBC_URL . 'assets/logos/bitcoin.svg" class="address_logo"><span>' . __('Donate To Address', 'cdbbc') . '</span></span>';
+                                $output .= '<span class="cdbbc_tab_btn active" id="donate_to_address' . $random_num . '"><img src="' . CDBBC_URL . 'assets/logos/bitcoin.svg" class="address_logo"><span>' . __('Donate To Address', 'cryptocurrency-donation-box') . '</span></span>';
                             }
-                            $output .= '<span class="cdbbc_tab_btn ' . $add_active_cls . '" id="donate_to_wallet' . $random_num . '"><img src="' . CDBBC_URL . 'assets/logos/metamask.svg" class="wallet_logo"><span>' . __('Donate Via Wallets', 'cdbbc') . '</span></span>';
+                            $output .= '<span class="cdbbc_tab_btn ' . $add_active_cls . '" id="donate_to_wallet' . $random_num . '"><img src="' . CDBBC_URL . 'assets/logos/metamask.svg" class="wallet_logo"><span>' . __('Donate Via Wallets', 'cryptocurrency-donation-box') . '</span></span>';
                             $output .= '</div><div class="cdbbc_sections">';
                         }
                         if (count($all_coin_wall_add) == 1) {
@@ -308,14 +309,14 @@ donation box shortcode
                             if ($metamask_wall_add != '') {
                                 $output .= '<div class="cdbbc_tab_section donate_to_wallet' . $random_num . ' ' . $add_active_cls . '" id="cdbbc_donate_to_wallet"><h2 class="cdbbc-wallet-title">' . $wallet_title . '</h2><p class="cdbbc-wallet-desc">' . $wallet_desc . '</p>' . cdbbc_wallet_html(false) . '</div></div>';
                             } else {
-                                $output .= '<h6>' . __('Please Add coin wallet address in plugin settings panel', 'cdbbc') . '</h6>';
+                                $output .= '<h6>' . __('Please Add coin wallet address in plugin settings panel', 'cryptocurrency-donation-box') . '</h6>';
 
                             }
                         }
                         $output .= '</div>';
                     }
                 } else {
-                    $output .= '<h6>' . __('Please Add coin wallet address in plugin settings panel', 'cdbbc') . '</h6>';
+                    $output .= '<h6>' . __('Please Add coin wallet address in plugin settings panel', 'cryptocurrency-donation-box') . '</h6>';
                 }
             } else {
                 if ($metamask_wall_add != '') {
@@ -327,7 +328,7 @@ donation box shortcode
 
                     $output .= '<div class="message"></div></div>';
                 } else {
-                    $output .= '<h6>' . esc_html__('Please Add Receiver Payment address in the settings panel', 'cdbbc') . '</h6>';
+                    $output .= '<h6>' . esc_html__('Please Add Receiver Payment address in the settings panel', 'cryptocurrency-donation-box') . '</h6>';
                 }
 
             }

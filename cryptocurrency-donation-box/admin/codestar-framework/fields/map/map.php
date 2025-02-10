@@ -20,9 +20,9 @@ if ( ! class_exists( 'CSF_Field_map' ) ) {
     public function render() {
 
       $args              = wp_parse_args( $this->field, array(
-        'placeholder'    => esc_html__( 'Search...', 'csf' ),
-        'latitude_text'  => esc_html__( 'Latitude', 'csf' ),
-        'longitude_text' => esc_html__( 'Longitude', 'csf' ),
+        'placeholder'    => esc_html__( 'Search...', 'cryptocurrency-donation-box' ),
+        'latitude_text'  => esc_html__( 'Latitude', 'cryptocurrency-donation-box' ),
+        'longitude_text' => esc_html__( 'Longitude', 'cryptocurrency-donation-box' ),
         'address_field'  => '',
         'height'         => '',
       ) );
@@ -81,7 +81,7 @@ if ( ! class_exists( 'CSF_Field_map' ) ) {
     public function enqueue() {
 
       if ( ! wp_script_is( 'csf-leaflet' ) ) {
-        wp_enqueue_script( 'csf-leaflet', esc_url( $this->cdn_url . $this->version .'/dist/leaflet.js' ), array( 'csf' ), $this->version, true );
+        wp_enqueue_script( 'csf-leaflet', esc_url( $this->cdn_url . $this->version .'/dist/leaflet.js' ), array( 'cryptocurrency-donation-box' ), $this->version, true );
       }
 
       if ( ! wp_style_is( 'csf-leaflet' ) ) {

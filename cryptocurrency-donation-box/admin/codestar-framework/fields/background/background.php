@@ -33,7 +33,7 @@ if ( ! class_exists( 'CSF_Field_background' ) ) {
         'background_auto_attributes'    => false,
         'compact'                       => false,
         'background_image_library'      => 'image',
-        'background_image_placeholder'  => esc_html__( 'Not selected', 'csf' ),
+        'background_image_placeholder'  => esc_html__( 'Not selected', 'cryptocurrency-donation-box' ),
       ) );
 
       if ( $args['compact'] ) {
@@ -69,7 +69,7 @@ if ( ! class_exists( 'CSF_Field_background' ) ) {
 
         echo '<div class="csf--color">';
 
-        echo ( ! empty( $args['background_gradient'] ) ) ? '<div class="csf--title">'. esc_html__( 'From', 'csf' ) .'</div>' : '';
+        echo ( ! empty( $args['background_gradient'] ) ) ? '<div class="csf--title">'. esc_html__( 'From', 'cryptocurrency-donation-box' ) .'</div>' : '';
 
         CSF::field( array(
           'id'      => 'background-color',
@@ -87,7 +87,7 @@ if ( ! class_exists( 'CSF_Field_background' ) ) {
 
         echo '<div class="csf--color">';
 
-        echo ( ! empty( $args['background_gradient'] ) ) ? '<div class="csf--title">'. esc_html__( 'To', 'csf' ) .'</div>' : '';
+        echo ( ! empty( $args['background_gradient'] ) ) ? '<div class="csf--title">'. esc_html__( 'To', 'cryptocurrency-donation-box' ) .'</div>' : '';
 
         CSF::field( array(
           'id'      => 'background-gradient-color',
@@ -105,17 +105,17 @@ if ( ! class_exists( 'CSF_Field_background' ) ) {
 
         echo '<div class="csf--color">';
 
-        echo ( ! empty( $args['background_gradient'] ) ) ? '<div class="csf---title">'. esc_html__( 'Direction', 'csf' ) .'</div>' : '';
+        echo ( ! empty( $args['background_gradient'] ) ) ? '<div class="csf---title">'. esc_html__( 'Direction', 'cryptocurrency-donation-box' ) .'</div>' : '';
 
         CSF::field( array(
           'id'          => 'background-gradient-direction',
           'type'        => 'select',
           'options'     => array(
-            ''          => esc_html__( 'Gradient Direction', 'csf' ),
-            'to bottom' => esc_html__( '&#8659; top to bottom', 'csf' ),
-            'to right'  => esc_html__( '&#8658; left to right', 'csf' ),
-            '135deg'    => esc_html__( '&#8664; corner top to right', 'csf' ),
-            '-135deg'   => esc_html__( '&#8665; corner top to left', 'csf' ),
+            ''          => esc_html__( 'Gradient Direction', 'cryptocurrency-donation-box' ),
+            'to bottom' => esc_html__( '&#8659; top to bottom', 'cryptocurrency-donation-box' ),
+            'to right'  => esc_html__( '&#8658; left to right', 'cryptocurrency-donation-box' ),
+            '135deg'    => esc_html__( '&#8664; corner top to right', 'cryptocurrency-donation-box' ),
+            '-135deg'   => esc_html__( '&#8665; corner top to left', 'cryptocurrency-donation-box' ),
           ),
         ), $this->value['background-gradient-direction'], $this->field_name(), 'field/background' );
 
@@ -158,16 +158,16 @@ if ( ! class_exists( 'CSF_Field_background' ) ) {
           'id'              => 'background-position',
           'type'            => 'select',
           'options'         => array(
-            ''              => esc_html__( 'Background Position', 'csf' ),
-            'left top'      => esc_html__( 'Left Top', 'csf' ),
-            'left center'   => esc_html__( 'Left Center', 'csf' ),
-            'left bottom'   => esc_html__( 'Left Bottom', 'csf' ),
-            'center top'    => esc_html__( 'Center Top', 'csf' ),
-            'center center' => esc_html__( 'Center Center', 'csf' ),
-            'center bottom' => esc_html__( 'Center Bottom', 'csf' ),
-            'right top'     => esc_html__( 'Right Top', 'csf' ),
-            'right center'  => esc_html__( 'Right Center', 'csf' ),
-            'right bottom'  => esc_html__( 'Right Bottom', 'csf' ),
+            ''              => esc_html__( 'Background Position', 'cryptocurrency-donation-box' ),
+            'left top'      => esc_html__( 'Left Top', 'cryptocurrency-donation-box' ),
+            'left center'   => esc_html__( 'Left Center', 'cryptocurrency-donation-box' ),
+            'left bottom'   => esc_html__( 'Left Bottom', 'cryptocurrency-donation-box' ),
+            'center top'    => esc_html__( 'Center Top', 'cryptocurrency-donation-box' ),
+            'center center' => esc_html__( 'Center Center', 'cryptocurrency-donation-box' ),
+            'center bottom' => esc_html__( 'Center Bottom', 'cryptocurrency-donation-box' ),
+            'right top'     => esc_html__( 'Right Top', 'cryptocurrency-donation-box' ),
+            'right center'  => esc_html__( 'Right Center', 'cryptocurrency-donation-box' ),
+            'right bottom'  => esc_html__( 'Right Bottom', 'cryptocurrency-donation-box' ),
           ),
         ), $this->value['background-position'], $this->field_name(), 'field/background' );
 
@@ -181,11 +181,11 @@ if ( ! class_exists( 'CSF_Field_background' ) ) {
           'id'          => 'background-repeat',
           'type'        => 'select',
           'options'     => array(
-            ''          => esc_html__( 'Background Repeat', 'csf' ),
-            'repeat'    => esc_html__( 'Repeat', 'csf' ),
-            'no-repeat' => esc_html__( 'No Repeat', 'csf' ),
-            'repeat-x'  => esc_html__( 'Repeat Horizontally', 'csf' ),
-            'repeat-y'  => esc_html__( 'Repeat Vertically', 'csf' ),
+            ''          => esc_html__( 'Background Repeat', 'cryptocurrency-donation-box' ),
+            'repeat'    => esc_html__( 'Repeat', 'cryptocurrency-donation-box' ),
+            'no-repeat' => esc_html__( 'No Repeat', 'cryptocurrency-donation-box' ),
+            'repeat-x'  => esc_html__( 'Repeat Horizontally', 'cryptocurrency-donation-box' ),
+            'repeat-y'  => esc_html__( 'Repeat Vertically', 'cryptocurrency-donation-box' ),
           ),
         ), $this->value['background-repeat'], $this->field_name(), 'field/background' );
 
@@ -199,9 +199,9 @@ if ( ! class_exists( 'CSF_Field_background' ) ) {
           'id'       => 'background-attachment',
           'type'     => 'select',
           'options'  => array(
-            ''       => esc_html__( 'Background Attachment', 'csf' ),
-            'scroll' => esc_html__( 'Scroll', 'csf' ),
-            'fixed'  => esc_html__( 'Fixed', 'csf' ),
+            ''       => esc_html__( 'Background Attachment', 'cryptocurrency-donation-box' ),
+            'scroll' => esc_html__( 'Scroll', 'cryptocurrency-donation-box' ),
+            'fixed'  => esc_html__( 'Fixed', 'cryptocurrency-donation-box' ),
           ),
         ), $this->value['background-attachment'], $this->field_name(), 'field/background' );
 
@@ -215,10 +215,10 @@ if ( ! class_exists( 'CSF_Field_background' ) ) {
           'id'        => 'background-size',
           'type'      => 'select',
           'options'   => array(
-            ''        => esc_html__( 'Background Size', 'csf' ),
-            'cover'   => esc_html__( 'Cover', 'csf' ),
-            'contain' => esc_html__( 'Contain', 'csf' ),
-            'auto'    => esc_html__( 'Auto', 'csf' ),
+            ''        => esc_html__( 'Background Size', 'cryptocurrency-donation-box' ),
+            'cover'   => esc_html__( 'Cover', 'cryptocurrency-donation-box' ),
+            'contain' => esc_html__( 'Contain', 'cryptocurrency-donation-box' ),
+            'auto'    => esc_html__( 'Auto', 'cryptocurrency-donation-box' ),
           ),
         ), $this->value['background-size'], $this->field_name(), 'field/background' );
 
@@ -232,10 +232,10 @@ if ( ! class_exists( 'CSF_Field_background' ) ) {
           'id'            => 'background-origin',
           'type'          => 'select',
           'options'       => array(
-            ''            => esc_html__( 'Background Origin', 'csf' ),
-            'padding-box' => esc_html__( 'Padding Box', 'csf' ),
-            'border-box'  => esc_html__( 'Border Box', 'csf' ),
-            'content-box' => esc_html__( 'Content Box', 'csf' ),
+            ''            => esc_html__( 'Background Origin', 'cryptocurrency-donation-box' ),
+            'padding-box' => esc_html__( 'Padding Box', 'cryptocurrency-donation-box' ),
+            'border-box'  => esc_html__( 'Border Box', 'cryptocurrency-donation-box' ),
+            'content-box' => esc_html__( 'Content Box', 'cryptocurrency-donation-box' ),
           ),
         ), $this->value['background-origin'], $this->field_name(), 'field/background' );
 
@@ -249,10 +249,10 @@ if ( ! class_exists( 'CSF_Field_background' ) ) {
           'id'            => 'background-clip',
           'type'          => 'select',
           'options'       => array(
-            ''            => esc_html__( 'Background Clip', 'csf' ),
-            'border-box'  => esc_html__( 'Border Box', 'csf' ),
-            'padding-box' => esc_html__( 'Padding Box', 'csf' ),
-            'content-box' => esc_html__( 'Content Box', 'csf' ),
+            ''            => esc_html__( 'Background Clip', 'cryptocurrency-donation-box' ),
+            'border-box'  => esc_html__( 'Border Box', 'cryptocurrency-donation-box' ),
+            'padding-box' => esc_html__( 'Padding Box', 'cryptocurrency-donation-box' ),
+            'content-box' => esc_html__( 'Content Box', 'cryptocurrency-donation-box' ),
           ),
         ), $this->value['background-clip'], $this->field_name(), 'field/background' );
 
@@ -266,17 +266,17 @@ if ( ! class_exists( 'CSF_Field_background' ) ) {
           'id'            => 'background-blend-mode',
           'type'          => 'select',
           'options'       => array(
-            ''            => esc_html__( 'Background Blend Mode', 'csf' ),
-            'normal'      => esc_html__( 'Normal', 'csf' ),
-            'multiply'    => esc_html__( 'Multiply', 'csf' ),
-            'screen'      => esc_html__( 'Screen', 'csf' ),
-            'overlay'     => esc_html__( 'Overlay', 'csf' ),
-            'darken'      => esc_html__( 'Darken', 'csf' ),
-            'lighten'     => esc_html__( 'Lighten', 'csf' ),
-            'color-dodge' => esc_html__( 'Color Dodge', 'csf' ),
-            'saturation'  => esc_html__( 'Saturation', 'csf' ),
-            'color'       => esc_html__( 'Color', 'csf' ),
-            'luminosity'  => esc_html__( 'Luminosity', 'csf' ),
+            ''            => esc_html__( 'Background Blend Mode', 'cryptocurrency-donation-box' ),
+            'normal'      => esc_html__( 'Normal', 'cryptocurrency-donation-box' ),
+            'multiply'    => esc_html__( 'Multiply', 'cryptocurrency-donation-box' ),
+            'screen'      => esc_html__( 'Screen', 'cryptocurrency-donation-box' ),
+            'overlay'     => esc_html__( 'Overlay', 'cryptocurrency-donation-box' ),
+            'darken'      => esc_html__( 'Darken', 'cryptocurrency-donation-box' ),
+            'lighten'     => esc_html__( 'Lighten', 'cryptocurrency-donation-box' ),
+            'color-dodge' => esc_html__( 'Color Dodge', 'cryptocurrency-donation-box' ),
+            'saturation'  => esc_html__( 'Saturation', 'cryptocurrency-donation-box' ),
+            'color'       => esc_html__( 'Color', 'cryptocurrency-donation-box' ),
+            'luminosity'  => esc_html__( 'Luminosity', 'cryptocurrency-donation-box' ),
           ),
         ), $this->value['background-blend-mode'], $this->field_name(), 'field/background' );
 

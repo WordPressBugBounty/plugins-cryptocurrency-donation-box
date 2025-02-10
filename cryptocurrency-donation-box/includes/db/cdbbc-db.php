@@ -33,8 +33,8 @@ class CDBBC_database
         global $wpdb;
     
         if (!isset($wpdb)) {
-            exit("The $wpdb variable is not defined. Please make sure the WordPress database object is available.");
-        }
+            exit(esc_html__("The \$wpdb variable is not defined. Please make sure the WordPress database object is available.", "cryptocurrency-donation-box"));
+        }    
         require_once ABSPATH . 'wp-admin/includes/upgrade.php';
         $table_name = $wpdb->base_prefix . 'cdbbc_transaction';
         $is_transaction_status = $wpdb->get_results("SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = '$table_name' AND COLUMN_NAME = 'transaction_status'");
@@ -51,7 +51,8 @@ class CDBBC_database
             if (empty($is_blockchain)) {
                 $wpdb->query("ALTER TABLE $table_name ADD blockchain varchar(100) NOT NULL");
             }
-            $sessions = $wpdb->get_results(sprintf("SELECT * FROM $temp_table_name"));
+
+            $sessions = $wpdb->get_results($wpdb->prepare("SELECT * FROM $temp_table_name"));
             if ($sessions) {
                 foreach ($sessions as $session) {
                     try{
@@ -84,48 +85,30 @@ class CDBBC_database
             }
         }
         $wp_table_name = esc_sql($wp_table_name);
-        // Setup arrays for Actual Values, and Placeholders
-        $values = array();
-        $place_holders = array();
-        $query = "";
-        $query_columns = "";
-        $query .= "INSERT INTO `{$wp_table_name}` (";
-        foreach ($row_arrays as $key => $value) {
-            if ($query_columns) {
-                $query_columns .= ", " . $key . "";
-            } else {
-                $query_columns .= "" . $key . "";
-            }
-            $values[] = $value;
-            $symbol = "%s";
-            if (isset($place_holders[$key])) {
-                $place_holders[$key] .= ", '$symbol'";
-            } else {
-                $place_holders[$key] = "( '$symbol'";
-            }
-            $place_holders[$key] .= ")";
+        if (!empty($row_arrays) && !isset($row_arrays[0])) {
+            $row_arrays = [$row_arrays];
         }
-        $query .= " $query_columns ) VALUES (";
-        $query .= implode(', ', $place_holders) . ')';
-        if ($update) {
-            $update = " ON DUPLICATE KEY UPDATE $primary_key=VALUES( $primary_key ),";
-            $cnt = 0;
-            foreach ($row_arrays as $key => $value) {
-                if ($cnt == 0) {
-                    $update .= "$key=VALUES($key)";
-                    $cnt = 1;
-                } else {
-                    $update .= ", $key=VALUES($key)";
-                }
-            }
-            $query .= $update;
+    
+        $columns = array_keys(reset($row_arrays));
+        $query_columns = implode(', ', array_map(fn($col) => "`$col`", $columns));
+        $query = "INSERT INTO `{$wp_table_name}` ($query_columns) VALUES ";
+        $place_holders = [];
+        $values = [];
+    
+        foreach ($row_arrays as $row) {
+            $place_holders[] = '(' . implode(', ', array_fill(0, count($row), '%s')) . ')';
+            $values = array_merge($values, array_values($row));
         }
-        $sql = $wpdb->prepare($query, $values);
-        if ($wpdb->query($sql)) {
-            return true;
-        } else {
-            return false;
+    
+        $query .= implode(', ', $place_holders);
+        if ($update && $primary_key) {
+            $update_columns = array_diff($columns, [$primary_key]); // Exclude primary key
+            $update_clause = implode(', ', array_map(fn($col) => "`$col` = VALUES(`$col`)", $update_columns));
+            $query .= " ON DUPLICATE KEY UPDATE $update_clause";
         }
+        $sql = call_user_func_array([$wpdb, 'prepare'], array_merge([$query], $values));
+    
+        return $wpdb->query($sql) !== false;
     }
 
     public function create_table()

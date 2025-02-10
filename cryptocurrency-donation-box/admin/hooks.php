@@ -8,7 +8,7 @@ function cdbbc_activate_site()
     if (empty($_POST['email']) || empty($_POST['plugin'])) {
         exit(json_encode([
             'success' => false,
-            'message' => __('Please enter your email address!', 'cdbbc')
+            'message' => __('Please enter your email address!', 'cryptocurrency-donation-box')
         ]));
     }
     CdbbcMetaApi::setupKeypair();
@@ -25,13 +25,13 @@ function cdbbc_activate_site()
         if (!$status) {
             exit(json_encode([
                 'success' => false,
-                'message' => __('Failed to register your site. Please try again!', 'cdbbc')
+                'message' => __('Failed to register your site. Please try again!', 'cryptocurrency-donation-box')
             ]));
         } else {
             if ($status === 'registered') {
                 exit(json_encode([
                     'success' => true,
-                    'message' => __('The plugin has been activated successfully!', 'cdbbc')
+                    'message' => __('The plugin has been activated successfully!', 'cryptocurrency-donation-box')
                 ]));
             } 
             //wip no authentication email being sent
@@ -39,7 +39,7 @@ function cdbbc_activate_site()
 
             //     exit(json_encode([
             //         'success' => true,
-            //         'message' => __('Please check your email for activation link!', 'cdbbc')
+            //         'message' => __('Please check your email for activation link!', 'cryptocurrency-donation-box')
             //     ]));
             // }
         }
@@ -47,7 +47,7 @@ function cdbbc_activate_site()
         if ($status === 'registered') {
             exit(json_encode([
                 'success' => true,
-                'message' => __('The plugin has been activated successfully!', 'cdbbc')
+                'message' => __('The plugin has been activated successfully!', 'cryptocurrency-donation-box')
             ]));
         } 
         //wip no authentication email being sent
@@ -55,7 +55,7 @@ function cdbbc_activate_site()
 
         //     exit(json_encode([
         //         'success' => true,
-        //         'message' => __('Please check your email for activation link!', 'cdbbc')
+        //         'message' => __('Please check your email for activation link!', 'cryptocurrency-donation-box')
         //     ]));
         // }
     }

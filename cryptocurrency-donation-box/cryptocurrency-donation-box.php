@@ -2,28 +2,26 @@
 /**
  * Plugin Name:Cryptocurrency Donation Box - Bitcoin & Crypto Donations
  * Description:Create cryptocurrency donation box and accept crypto coin payments, show coin address and QR code - best bitcoin & crypto donations plugin.
- * Plugin URI:https://www.blackworks.io/
- * Author:Blackworks.io
- * Author URI:https://www.blackworks.io/
- * Version: 2.2.12
+ * Plugin URI:https://www.adastracrypto.com/
+ * Author:adastracrypto.com
+ * Author URI:https://www.adastracrypto.com/
+ * Version: 2.2.13
  * License: GPL2
- * Text Domain:CDBBC
+ * Text Domain:cryptocurrency-donation-box
  * Domain Path: /languages
  *
  * @package Cryptocurrency_Donation_Box
  */
-
-define('CDBBC_DIR', __DIR__ . '/');
-define('CDBBC_URI', plugins_url('/', __FILE__));
 if (!defined('ABSPATH')) {
     exit;
 }
-
+define('CDBBC_DIR', __DIR__ . '/');
+define('CDBBC_URI', plugins_url('/', __FILE__));
 if (defined('CDBBC_VERSION')) {
     return;
 }
 
-define('CDBBC_VERSION', '2.2.12');
+define('CDBBC_VERSION', '2.2.13');
 define('CDBBC_FILE', __FILE__);
 define('CDBBC_PATH', plugin_dir_path(CDBBC_FILE));
 define('CDBBC_URL', plugin_dir_url(CDBBC_FILE));

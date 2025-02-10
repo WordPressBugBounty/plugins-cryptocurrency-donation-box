@@ -61,7 +61,7 @@ function cdbbc_dynamic_title_change(evt){
         jQuery.ajax({
             type: "post",
             dataType: "json",
-            url: wallets_data.ajax,
+            url: wallets_data.ajax_url ,
             data: request_data,
             success: function (data) {
                 console.log(data);

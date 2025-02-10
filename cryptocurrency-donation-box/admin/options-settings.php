@@ -12,28 +12,27 @@ if (class_exists('CSF')):
     $prefix = 'cdbbc_settings';
     $veryfy_activation = "";
     $resgister_site = "";
-    if (isset($_SERVER['HTTPS']) && 'on' == strtolower($_SERVER['HTTPS']) && get_option('cdbbc_email_verification')) {
+    if (isset($_SERVER['HTTPS']) && 'on' === strtolower(sanitize_text_field(wp_unslash($_SERVER['HTTPS']))) && get_option('cdbbc_email_verification')) {
         if (is_admin()) {
             $veryfy_activation = CdbbcMetaApi::getActivationStatus(CDBBC_PLUGIN_NAME);
         }
-
     }
     if ($veryfy_activation == "registered") {
         $resgister_site = array(
             'type' => 'submessage',
             'style' => 'success',
             'dependency' => array('share_donars_data', '==', true),
-            'content' => __('The plugin has been activated successfully!', 'cdbbc'),
+            'content' => __('The plugin has been activated successfully!', 'cryptocurrency-donation-box'),
         );
     } else {
         $resgister_site = array(
             'id' => 'admin_email',
-            'title' => __('Enter Email', 'cdbbc'),
+            'title' => __('Enter Email', 'cryptocurrency-donation-box'),
             'type' => 'text',
             'class' => 'cdbbc_admin_email',
             'default' => get_option('admin_email'),
-            'help' => esc_html__('Make sure to use Permalinks >> Post name (/%postname%/) before activating this plugin. ', 'cdbbc'),
-            'desc' => 'By registering your site with BlackWorks.io(Plugin Author), you are agreeing to these <a href=admin_url() . "admin.php?page=cdbbc-crypto-donations#tab=terms-conditions" target="_blank">terms</a> and <a href=admin_url() . "admin.php?page=cdbbc-crypto-donations#tab=terms-conditions" target="_blank">privacy policy.</a><br>Save settings once if email address updated.<br><span style="color:red"> Make sure to use <b>Permalinks >> Post name (/%postname%/)</b> before activating this plugin. </span>',
+            'help' => esc_html__('Make sure to use Permalinks >> Post name (/%postname%/) before activating this plugin. ', 'cryptocurrency-donation-box'),
+            'desc' => 'By registering your site with adastracrypto.com(Plugin Author), you are agreeing to these <a href=admin_url() . "admin.php?page=cdbbc-crypto-donations#tab=terms-conditions" target="_blank">terms</a> and <a href=admin_url() . "admin.php?page=cdbbc-crypto-donations#tab=terms-conditions" target="_blank">privacy policy.</a><br>Save settings once if email address updated.<br><span style="color:red"> Make sure to use <b>Permalinks >> Post name (/%postname%/)</b> before activating this plugin. </span>',
             'after' => '<span class="button button-primary" id="cdbbc_register_site">Register Site</span><p class="cdbbc_response_msg"></p>',
             'dependency' => array('share_donars_data', '==', true),
         );
@@ -41,7 +40,7 @@ if (class_exists('CSF')):
     CDBBC_CSF::createOptions(
         $prefix,
         array(
-            'framework_title' => esc_html__('Crypto Donation Box', 'cdbbc'),
+            'framework_title' => esc_html__('Crypto Donation Box', 'cryptocurrency-donation-box'),
             'menu_title' => "Crypto Donation",
             'menu_slug' => 'cdbbc-crypto-donations',
             'menu_capability' => 'manage_options',
@@ -68,23 +67,23 @@ if (class_exists('CSF')):
             'fields' => array(
                 array(
                     'id' => 'user_wallet',
-                    'title' => __('Common Donation ETH Address For Wallets <span style="color:red">(Required)</span>', 'cdbbc'),
+                    'title' => __('Common Donation ETH Address For Wallets <span style="color:red">(Required)</span>', 'cryptocurrency-donation-box'),
                     'type' => 'text',
                     'placeholder' => '0x1dCXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
                     'validate' => 'csf_validate_required_wallet',
-                    'help' => esc_html__('Default wallet ETH address to receive payments', 'cdbbc'),
-                    'desc' => esc_html__('Default wallet ETH address to receive payments ', 'cdbbc'),
+                    'help' => esc_html__('Default wallet ETH address to receive payments', 'cryptocurrency-donation-box'),
+                    'desc' => esc_html__('Default wallet ETH address to receive payments ', 'cryptocurrency-donation-box'),
                 ),
                 array(
                     'id' => 'infura_project_id',
-                    'title' => __('Infura Project Id', 'cdbbc'),
+                    'title' => __('Infura Project Id', 'cryptocurrency-donation-box'),
                     'type' => 'text',
-                    'help' => esc_html__('Please enter infura project id for Walletconnect to work ', 'cdbbc'),
-                    'desc' => __('Get your infura project API-KEY by signing up  <a href="https://infura.io/register" target="_blank"> here</a>. Choose <b>Web3 API</b> as <b>network</b> and give a nice <b>name</b> of your choice. Copy the API-KEY from the next window.', 'cdbbc'),
+                    'help' => esc_html__('Please enter infura project id for Walletconnect to work ', 'cryptocurrency-donation-box'),
+                    'desc' => __('Get your infura project API-KEY by signing up  <a href="https://infura.io/register" target="_blank"> here</a>. Choose <b>Web3 API</b> as <b>network</b> and give a nice <b>name</b> of your choice. Copy the API-KEY from the next window.', 'cryptocurrency-donation-box'),
                 ),
                 array(
                     'id' => 'tutorial_videos',
-                    'title' => esc_html__('Tutorial Videos', 'cdbbc'),
+                    'title' => esc_html__('Tutorial Videos', 'cryptocurrency-donation-box'),
                     'type' => 'fieldset',
                     'fields' => array(
                         array(
@@ -100,7 +99,7 @@ if (class_exists('CSF')):
                 ),
                 array(
                     'id' => 'rules_desc',
-                    'title' => esc_html__('Important Guidelines', 'cdbbc'),
+                    'title' => esc_html__('Important Guidelines', 'cryptocurrency-donation-box'),
                     'type' => 'fieldset',
                     'fields' => array(
                         array(
@@ -244,7 +243,7 @@ if (class_exists('CSF')):
                         <p>If you have any questions or concerns, please contact us at <a
                                 href="mailto:info@adastracrypto.com">info@adastracrypto.com</a>.</p>
                     
-                    </div>', 'cdbbc'),
+                    </div>', 'cryptocurrency-donation-box'),
                     ),
                 ),
             ),
@@ -258,22 +257,28 @@ if (class_exists('CSF')):
             'fields' => array(
                 array(
                     'id' => 'wallet_notice',
-                    'title' => __('Wallet Notice', 'cdbbc'),
+                    'title' => __('Wallet Notice', 'cryptocurrency-donation-box'),
                     'type' => 'content',
-                    'content' => __('Please enter your Common Donation ETH Address For Wallets to access the rest of the settings. Click <a href="' . esc_url(get_admin_url(null, 'admin.php?page=cdbbc-crypto-donations#tab=quick-setup')) . '" target="_blank">here</a> to get redirected to the relevant page', 'cdbbc'),
+                   'content' => sprintf(
+                        /* translators: 1: Opening anchor tag, 2: Closing anchor tag */
+                        __('Please enter your Common Donation ETH Address for Wallets to access the rest of the settings. Click %1$shere%2$s to get redirected to the relevant page.', 'cryptocurrency-donation-box'),
+                        '<a href="' . esc_url(get_admin_url(null, 'admin.php?page=cdbbc-crypto-donations#tab=quick-setup')) . '" target="_blank">',
+                        '</a>'
+                    ),
                     'dependency' => array('user_wallet', '==', '', 'all'),
                 ),
+                
                 array(
                     'id' => 'share_user_data',
-                    'title' => esc_html__('Activate Fraud Detection', 'cdbbc'),
+                    'title' => esc_html__('Activate Fraud Detection', 'cryptocurrency-donation-box'),
                     'type' => 'fieldset',
                     'class' => 'hidden',
                     'fields' => array(
                         array(
                             'id' => 'share_donars_data',
-                            'title' => esc_html__('Register Your Site', 'cdbbc'),
+                            'title' => esc_html__('Register Your Site', 'cryptocurrency-donation-box'),
                             'type' => 'switcher',
-                            'help' => esc_html__('Activate Fraud Detection', 'cdbbc'),
+                            'help' => esc_html__('Activate Fraud Detection', 'cryptocurrency-donation-box'),
                             'class' => 'hidden',
                             'default' => true,
                         ),
@@ -285,38 +290,38 @@ if (class_exists('CSF')):
 
                 array(
                     'id' => 'supported_wallets',
-                    'title' => esc_html__('Accept Donation Via Wallets', 'cdbbc'),
+                    'title' => esc_html__('Accept Donation Via Wallets', 'cryptocurrency-donation-box'),
                     'type' => 'fieldset',
                     'dependency' => array('user_wallet', '!=', '', 'all'),
                     'fields' => array(
                         array(
                             'id' => 'metamask_wallet',
-                            'title' => esc_html__('MetaMask Wallet', 'cdbbc'),
+                            'title' => esc_html__('MetaMask Wallet', 'cryptocurrency-donation-box'),
                             'type' => 'checkbox',
-                            'help' => esc_html__('this wallet for payment', 'cdbbc'),
+                            'help' => esc_html__('this wallet for payment', 'cryptocurrency-donation-box'),
                             'default' => true,
                         ),
                         array(
                             'id' => 'binance_wallet',
-                            'title' => esc_html__('Binance Wallet', 'cdbbc'),
+                            'title' => esc_html__('Binance Wallet', 'cryptocurrency-donation-box'),
                             'type' => 'checkbox',
                             'default' => true,
                         ),
                         array(
                             'id' => 'trust_wallet',
-                            'title' => esc_html__('Trust Wallet', 'cdbbc'),
+                            'title' => esc_html__('Trust Wallet', 'cryptocurrency-donation-box'),
                             'type' => 'checkbox',
                             'default' => true,
                         ),
                         array(
                             'id' => 'wallet_connect',
-                            'title' => esc_html__('Wallet Connect', 'cdbbc'),
+                            'title' => esc_html__('Wallet Connect', 'cryptocurrency-donation-box'),
                             'type' => 'checkbox',
                             'default' => true,
                         ),
                         // array(
                         //     'id' => 'qr',
-                        //     'title' => esc_html__('Enable Wallet Connect', 'cdbbc'),
+                        //     'title' => esc_html__('Enable Wallet Connect', 'cryptocurrency-donation-box'),
                         //     'type' => 'switcher',
                         //     'default' => true,
                         // ),
@@ -327,13 +332,13 @@ if (class_exists('CSF')):
 
                 array(
                     'id' => 'wallet_title_desc',
-                    'title' => esc_html__('Wallet Settings', 'cdbbc'),
+                    'title' => esc_html__('Wallet Settings', 'cryptocurrency-donation-box'),
                     'type' => 'fieldset',
                     'dependency' => array('user_wallet', '!=', '', 'all'),
                     'fields' => array(
                         array(
                             'id' => 'wallet_main_title',
-                            'title' => __('Wallet Title', 'cdbbc'),
+                            'title' => __('Wallet Title', 'cryptocurrency-donation-box'),
                             'type' => 'text',
                             'placeholder' => 'Title',
                             'default' => 'Donate Via Wallets',
@@ -342,14 +347,14 @@ if (class_exists('CSF')):
                             'id' => 'wallet_main_desc',
                             'type' => 'textarea',
                             'title' => 'Description',
-                            'desc' => esc_html__('Wallet description', 'cdbbc'),
+                            'desc' => esc_html__('Wallet description', 'cryptocurrency-donation-box'),
                             'default' => 'Select a wallet to accept donation in ETH BNB BUSD etc..',
                         ),
                         array(
                             'id' => 'wallet_terms_condition',
                             'type' => 'textarea',
                             'title' => 'Terms&Conditions',
-                            'desc' => esc_html__('These terms will be visible to a donor if he is making a donation via a wallet.', 'cdbbc'),
+                            'desc' => esc_html__('These terms will be visible to a donor if he is making a donation via a wallet.', 'cryptocurrency-donation-box'),
                             'default' => 'By making a donation you are agreeing to share your transaction data with website owner',
                         ),
 
@@ -366,7 +371,7 @@ if (class_exists('CSF')):
         $prefix,
         array(
             'id' => 'add_coins_tokens',
-            'title' => esc_html__('Add Coins/Tokens', 'cdbbc'),
+            'title' => esc_html__('Add Coins/Tokens', 'cryptocurrency-donation-box'),
             'icon' => 'fa fa-btc',
             'fields' => array(
                 array(
@@ -399,52 +404,52 @@ if (class_exists('CSF')):
                             'class' => 'cdbbc_popular_coin',
                             'after' => ' <span class="cdbbc_selected_coin">up to</span>',
                             'options' => CDBBC_supported_coins(),
-                            'desc' => esc_html__('You can use this coin id to show selected coins in your shortcode', 'cdbbc'),
+                            'desc' => esc_html__('You can use this coin id to show selected coins in your shortcode', 'cryptocurrency-donation-box'),
                             'default' => 'bitcoin',
                         ),
                         // array(
                         //     'id' => 'wallet_address',
-                        //     'title' => __('Enter address', 'cdbbc'),
+                        //     'title' => __('Enter address', 'cryptocurrency-donation-box'),
                         //     'type' => 'text',
                         //     'placeholder' => '0x1dCXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
                         //     'validate' => 'csf_validate_required',
                         //     'dependency' => array('coin_type', '==', 'popular'),
-                        //     'help' => esc_html__('Default wallet address to receive payments ', 'cdbbc'),
-                        //     'desc' => esc_html__('Default wallet address to receive payments ', 'cdbbc'),
+                        //     'help' => esc_html__('Default wallet address to receive payments ', 'cryptocurrency-donation-box'),
+                        //     'desc' => esc_html__('Default wallet address to receive payments ', 'cryptocurrency-donation-box'),
                         // ),
                         array(
                             'id' => 'tag_note',
-                            'title' => __('Tag/Note (if any)', 'cdbbc'),
+                            'title' => __('Tag/Note (if any)', 'cryptocurrency-donation-box'),
                             'type' => 'text',
                             'dependency' => array('coin_type', '==', 'popular'),
-                            'help' => esc_html__('Enter Tag/Note if have any', 'cdbbc'),
-                            'desc' => esc_html__('Enter Tag/Note if have any', 'cdbbc'),
+                            'help' => esc_html__('Enter Tag/Note if have any', 'cryptocurrency-donation-box'),
+                            'desc' => esc_html__('Enter Tag/Note if have any', 'cryptocurrency-donation-box'),
                         ),
 
                         array(
                             'id' => 'coin_name',
-                            'title' => __('Coin Name', 'cdbbc'),
+                            'title' => __('Coin Name', 'cryptocurrency-donation-box'),
                             'type' => 'text',
                             'class' => 'cdbbc_custom_coin',
                             'dependency' => array('coin_type', '==', 'custom'),
                         ),
                         array(
                             'id' => 'coin_symbol',
-                            'title' => __('Coin Symbol', 'cdbbc'),
+                            'title' => __('Coin Symbol', 'cryptocurrency-donation-box'),
                             'type' => 'text',
                             'dependency' => array('coin_type', '==', 'custom'),
                         ),
                         array(
                             'id' => 'coin_id',
-                            'title' => __('Coin Id', 'cdbbc'),
+                            'title' => __('Coin Id', 'cryptocurrency-donation-box'),
                             'type' => 'text',
                             'dependency' => array('coin_type', '==', 'custom'),
-                            'help' => esc_html__('You can use this coin id to show selected coins in your shortcode', 'cdbbc'),
-                            'desc' => esc_html__('You can use this coin id to show selected coins in your shortcode', 'cdbbc'),
+                            'help' => esc_html__('You can use this coin id to show selected coins in your shortcode', 'cryptocurrency-donation-box'),
+                            'desc' => esc_html__('You can use this coin id to show selected coins in your shortcode', 'cryptocurrency-donation-box'),
                         ),
                         // array(
                         //     'id' => 'wallet_address_custom',
-                        //     'title' => __('Enter Wallet address', 'cdbbc'),
+                        //     'title' => __('Enter Wallet address', 'cryptocurrency-donation-box'),
                         //     'type' => 'text',
                         //     'dependency' => array('coin_type', '==', 'custom'),
                         // ),
@@ -460,35 +465,35 @@ if (class_exists('CSF')):
                         ),
                         array(
                             'id' => 'tag_note_custom',
-                            'title' => __('Tag/Note (if any)', 'cdbbc'),
+                            'title' => __('Tag/Note (if any)', 'cryptocurrency-donation-box'),
                             'type' => 'text',
                             'dependency' => array('coin_type', '==', 'custom'),
-                            'help' => esc_html__('Enter Tag/Note if have any', 'cdbbc'),
-                            'desc' => esc_html__('Enter Tag/Note if have any', 'cdbbc'),
+                            'help' => esc_html__('Enter Tag/Note if have any', 'cryptocurrency-donation-box'),
+                            'desc' => esc_html__('Enter Tag/Note if have any', 'cryptocurrency-donation-box'),
                         ),
                     ),
                 ),
                 array(
                     'id' => 'enable_wallet_in_design',
-                    'title' => esc_html__('Enable Donation Via Wallets In', 'cdbbc'),
+                    'title' => esc_html__('Enable Donation Via Wallets In', 'cryptocurrency-donation-box'),
                     'type' => 'fieldset',
                     'dependency' => array('user_wallet', '!=', '', 'all'),
                     'fields' => array(
                         array(
                             'id' => 'wallet_tab_style',
-                            'title' => esc_html__('Tabular Style', 'cdbbc'),
+                            'title' => esc_html__('Tabular Style', 'cryptocurrency-donation-box'),
                             'type' => 'switcher',
                             'default' => true,
                         ),
                         array(
                             'id' => 'wallet_list_style',
-                            'title' => esc_html__('List Style', 'cdbbc'),
+                            'title' => esc_html__('List Style', 'cryptocurrency-donation-box'),
                             'type' => 'switcher',
                             'default' => true,
                         ),
                         array(
                             'id' => 'wallet_popup_style',
-                            'title' => esc_html__('Popup Style', 'cdbbc'),
+                            'title' => esc_html__('Popup Style', 'cryptocurrency-donation-box'),
                             'type' => 'switcher',
                             'default' => true,
                         ),
@@ -498,31 +503,37 @@ if (class_exists('CSF')):
                 ),
                 array(
                     'id' => 'wallet_notice',
-                    'title' => __('Wallet Notice', 'cdbbc'),
+                    'title' => __('Wallet Notice', 'cryptocurrency-donation-box'), // Use static text domain
                     'type' => 'content',
-                    'content' => __('Please enter your Common Donation ETH Address For Wallets to access the rest of the settings. Click <a href="' . esc_url(get_admin_url(null, 'admin.php?page=cdbbc-crypto-donations#tab=quick-setup')) . '" target="_blank">here</a> to get redirected to the relevant page', 'cdbbc'),
+                    'content' => sprintf(
+                        /* translators: %1$s and %2$s wrap the word "here" with a hyperlink. */
+                        __('Please enter your Common Donation ETH Address for Wallets to access the rest of the settings. Click %1$shere%2$s to get redirected to the relevant page.', 'cryptocurrency-donation-box'),
+                        '<a href="' . esc_url(get_admin_url(null, 'admin.php?page=cdbbc-crypto-donations#tab=quick-setup')) . '" target="_blank">', // Placeholder 1
+                        '</a>' // Placeholder 2
+                    ),
                     'dependency' => array('user_wallet', '==', '', 'all'),
                 ),
+                
                 array(
                     'id' => 'tile_desc_settings',
-                    'title' => esc_html__('DONATION BOX CONTENT SETTINGS', 'cdbbc'),
+                    'title' => esc_html__('DONATION BOX CONTENT SETTINGS', 'cryptocurrency-donation-box'),
                     'type' => 'fieldset',
                     'dependency' => array('user_wallet', '!=', '', 'all'),
                     'fields' => array(
                         array(
                             'id' => 'main_title',
-                            'title' => __('Main Title', 'cdbbc'),
+                            'title' => __('Main Title', 'cryptocurrency-donation-box'),
                             'type' => 'text',
                             'placeholder' => 'Title',
-                            'help' => esc_html__('Use [coin-name]([coin-symbol]) to dynamically change coin name like Bitcoin(BTC),Ethereum(ETH) etc.', 'cdbbc'),
-                            'desc' => esc_html__('Use [coin-name]([coin-symbol]) to dynamically change coin name like Bitcoin(BTC),Ethereum(ETH) etc. ', 'cdbbc'),
+                            'help' => esc_html__('Use [coin-name]([coin-symbol]) to dynamically change coin name like Bitcoin(BTC),Ethereum(ETH) etc.', 'cryptocurrency-donation-box'),
+                            'desc' => esc_html__('Use [coin-name]([coin-symbol]) to dynamically change coin name like Bitcoin(BTC),Ethereum(ETH) etc. ', 'cryptocurrency-donation-box'),
                             'default' => 'Donate [coin-name]([coin-symbol]) to this address',
                         ),
                         array(
                             'id' => 'main_desc',
                             'type' => 'textarea',
                             'title' => 'Description',
-                            'desc' => esc_html__('Use [coin-name]([coin-symbol]) to dynamically change coin name like Bitcoin(BTC),Ethereum(ETH) etc. ', 'cdbbc'),
+                            'desc' => esc_html__('Use [coin-name]([coin-symbol]) to dynamically change coin name like Bitcoin(BTC),Ethereum(ETH) etc. ', 'cryptocurrency-donation-box'),
                             'default' => 'Scan the QR code or copy the address below into your wallet to send some [coin-name]([coin-symbol])',
                         ),
 
@@ -542,71 +553,79 @@ if (class_exists('CSF')):
             'fields' => array(
                 array(
                     'id' => 'wallet_notice',
-                    'title' => __('Wallet Notice', 'cdbbc'),
+                    'title' => __('Wallet Notice', 'cryptocurrency-donation-box'),
                     'type' => 'content',
-                    'content' => __('Please enter your Common Donation ETH Address For Wallets to access the rest of the settings. Click <a href="' . esc_url(get_admin_url(null, 'admin.php?page=cdbbc-crypto-donations#tab=quick-setup')) . '" target="_blank">here</a> to get redirected to the relevant page', 'cdbbc'),
+                    'content' => sprintf(
+                        /* translators: %s: URL for quick setup */
+                        __('Please enter your Common Donation ETH Address For Wallets to access the rest of the settings. Click <a href="%s" target="_blank">here</a> to get redirected to the relevant page', 'cryptocurrency-donation-box'),
+                        esc_url(get_admin_url(null, 'admin.php?page=cdbbc-crypto-donations#tab=quick-setup'))
+                    ),
                     'dependency' => array('user_wallet', '==', '', 'all'),
                 ),
                 array(
                     'id' => 'custom_networks',
-                    'title' => esc_html__('Accepted Networks', 'cdbbc'),
+                    'title' => esc_html__('Accepted Networks', 'cryptocurrency-donation-box'),
                     'type' => 'group',
                     'dependency' => array('user_wallet', '!=', '', 'all'),
                     'accordion_title_by' => array('chainName', 'enable'),
                     'accordion_title_by_prefix' => ' | ',
-                    'button_title' => esc_html__('Add new', 'cdbbc'),
+                    'button_title' => esc_html__('Add new', 'cryptocurrency-donation-box'),
                     'default' => cdbbc_default_networks(),
 
                     'fields' => array(
                         array(
                             'id' => 'enable',
-                            'title' => esc_html__('Enable Network', 'cdbbc'),
+                            'title' => esc_html__('Enable Network', 'cryptocurrency-donation-box'),
                             'type' => 'switcher',
                             'desc' => 'Get your network details <a href="https://chainlist.org/" target="_blank">Click Here</a>',
-                            'help' => esc_html__('Enable this network for payment', 'cdbbc'),
+                            'help' => esc_html__('Enable this network for payment', 'cryptocurrency-donation-box'),
                             'default' => true,
                         ),
 
                         array(
                             'id' => 'recever_wallet',
-                            'title' => __('Payment ETH Address', 'cdbbc'),
+                            'title' => __('Payment ETH Address', 'cryptocurrency-donation-box'),
                             'type' => 'text',
                             'placeholder' => '0x1dCXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
                             'dependency' => array('enable', '==', true),
                             'desc' => '<strong>Leave this field empty if you want to use default payment ETH address.</strong>',
-                            'help' => esc_html__('Leave this field empty if you want to use default payment ETH address.', 'cdbbc'),
+                            'help' => esc_html__('Leave this field empty if you want to use default payment ETH address.', 'cryptocurrency-donation-box'),
                         ),
 
                         array(
-                            'title' => esc_html__('Network Name', 'cdbbc'),
+                            'title' => esc_html__('Network Name', 'cryptocurrency-donation-box'),
                             'id' => 'chainName',
                             'dependency' => array('enable', '==', true),
                             'type' => 'text',
                         ),
                         array(
-                            'title' => esc_html__('Network RPC URL', 'cdbbc'),
+                            'title' => esc_html__('Network RPC URL', 'cryptocurrency-donation-box'),
                             'id' => 'rpcUrls',
                             'dependency' => array('enable', '==', true),
                             'type' => 'text',
                         ),
                         array(
-                            'title' => esc_html__('Network Chain ID', 'cdbbc'),
+                            'title' => esc_html__('Network Chain ID', 'cryptocurrency-donation-box'),
                             'id' => 'chainId',
                             'dependency' => array('enable', '==', true),
                             'class' => 'cdbbc_chain_id',
                             'type' => 'text',
                         ),
                         array(
-                            'title' => esc_html__('Block Explorer URL', 'cdbbc'),
+                            'title' => esc_html__('Block Explorer URL', 'cryptocurrency-donation-box'),
                             'id' => 'blockExplorerUrls',
                             'dependency' => array('enable', '==', true),
                             'type' => 'text',
                         ),
                         array(
                             'id' => 'wallet_notice',
-                            'title' => __('Wallet Notice', 'cdbbc'),
+                            'title' => __('Wallet Notice', 'cryptocurrency-donation-box'),
                             'type' => 'content',
-                            'content' => __('Please enter your Common Donation ETH Address For Wallets to access the rest of the settings. Click <a href="' . esc_url(get_admin_url(null, 'admin.php?page=cdbbc-crypto-donations#tab=quick-setup')) . '" target="_blank">here</a> to get redirected to the relevant page', 'cdbbc'),
+                            'content' => sprintf(
+                                /* translators: %s: URL to the setup page */
+                                esc_html__('Please enter your Common Donation ETH Address For Wallets to access the rest of the settings. Click <a href="%s" target="_blank">here</a> to get redirected to the relevant page', 'cryptocurrency-donation-box'),
+                                esc_url(get_admin_url(null, 'admin.php?page=cdbbc-crypto-donations#tab=quick-setup'))
+                            ),
                             'dependency' => array('user_wallet', '==', '', 'all'),
                         ),
                         array(
@@ -614,35 +633,35 @@ if (class_exists('CSF')):
                             'dependency' => array('enable', '==', true),
                             'type' => 'fieldset',
                             'dependency' => array('user_wallet', '!=', '', 'all'),
-                            'title' => esc_html__('Network Main Currency', 'cdbbc'),
+                            'title' => esc_html__('Network Main Currency', 'cryptocurrency-donation-box'),
                             'fields' => array(
                                 array(
                                     'id' => 'enable',
-                                    'title' => esc_html__('Enable Currency', 'cdbbc'),
+                                    'title' => esc_html__('Enable Currency', 'cryptocurrency-donation-box'),
                                     'type' => 'switcher',
-                                    'help' => esc_html__('Enable this currency', 'cdbbc'),
+                                    'help' => esc_html__('Enable this currency', 'cryptocurrency-donation-box'),
                                     'default' => true,
                                 ),
                                 array(
                                     'id' => 'name',
                                     'type' => 'text',
                                     'dependency' => array('enable', '==', true),
-                                    'title' => esc_html__('Name', 'cdbbc'),
+                                    'title' => esc_html__('Name', 'cryptocurrency-donation-box'),
                                 ),
                                 array(
                                     'id' => 'symbol',
                                     'type' => 'text',
                                     'dependency' => array('enable', '==', true),
-                                    'title' => esc_html__('Symbol', 'cdbbc'),
+                                    'title' => esc_html__('Symbol', 'cryptocurrency-donation-box'),
                                 ),
                                 array(
                                     'id' => 'decimals',
                                     'type' => 'number',
                                     'dependency' => array('enable', '==', true),
-                                    'title' => esc_html__('Decimals', 'cdbbc'),
+                                    'title' => esc_html__('Decimals', 'cryptocurrency-donation-box'),
                                 ),
                                 array(
-                                    'title' => esc_html__('Image', 'cdbbc'),
+                                    'title' => esc_html__('Image', 'cryptocurrency-donation-box'),
                                     'id' => 'image',
                                     'dependency' => array('enable', '==', true),
                                     'type' => 'upload',
@@ -652,16 +671,21 @@ if (class_exists('CSF')):
                                     'type' => 'number',
                                     'dependency' => array('enable', '==', true),
                                     'title' => 'Default Price',
-                                    'desc' => esc_html__('Default donation amount', 'cdbbc'),
+                                    'desc' => esc_html__('Default donation amount', 'cryptocurrency-donation-box'),
                                 ),
 
                             ),
                         ),
                         array(
                             'id' => 'wallet_notice',
-                            'title' => __('Wallet Notice', 'cdbbc'),
+                            'title' => __('Wallet Notice', 'cryptocurrency-donation-box'),
                             'type' => 'content',
-                            'content' => __('Please enter your Common Donation ETH Address For Wallets to access the rest of the settings. Click <a href="' . esc_url(get_admin_url(null, 'admin.php?page=cdbbc-crypto-donations#tab=quick-setup')) . '" target="_blank">here</a> to get redirected to the relevant page', 'cdbbc'),
+                            'content' => sprintf(
+                                /* translators: %1$s is the opening anchor tag, %2$s is the closing anchor tag */
+                                __('Please enter your Common Donation ETH Address For Wallets to access the rest of the settings. Click %1$shere%2$s to get redirected to the relevant page.', 'cryptocurrency-donation-box'),
+                                '<a href="' . esc_url(get_admin_url(null, 'admin.php?page=cdbbc-crypto-donations#tab=quick-setup')) . '" target="_blank">', // Placeholder 1
+                                '</a>' // Placeholder 2
+                            ),
                             'dependency' => array('user_wallet', '==', '', 'all'),
                         ),
                         array(
@@ -671,31 +695,31 @@ if (class_exists('CSF')):
                             'dependency' => array('user_wallet', '!=', '', 'all'),
                             'accordion_title_by' => array('symbol', 'enable'),
                             'accordion_title_by_prefix' => ' | ',
-                            'title' => esc_html__('Tokens', 'cdbbc'),
-                            'button_title' => esc_html__('Add new', 'cdbbc'),
+                            'title' => esc_html__('Tokens', 'cryptocurrency-donation-box'),
+                            'button_title' => esc_html__('Add new', 'cryptocurrency-donation-box'),
                             'fields' => array(
                                 array(
                                     'id' => 'enable',
-                                    'title' => esc_html__('Enable Currency', 'cdbbc'),
+                                    'title' => esc_html__('Enable Currency', 'cryptocurrency-donation-box'),
                                     'type' => 'switcher',
-                                    'help' => esc_html__('Enable this Token to show in Network', 'cdbbc'),
+                                    'help' => esc_html__('Enable this Token to show in Network', 'cryptocurrency-donation-box'),
                                     'default' => true,
                                 ),
                                 array(
-                                    'title' => esc_html__('Symbol', 'cdbbc'),
+                                    'title' => esc_html__('Symbol', 'cryptocurrency-donation-box'),
                                     'id' => 'symbol',
                                     'dependency' => array('enable', '==', true),
                                     'type' => 'text',
                                 ),
                                 array(
-                                    'title' => esc_html__('Contract Address', 'cdbbc'),
+                                    'title' => esc_html__('Contract Address', 'cryptocurrency-donation-box'),
                                     'id' => 'contract_address',
                                     'placeholder' => '0x1dCXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
                                     'dependency' => array('enable', '==', true),
                                     'type' => 'text',
                                 ),
                                 array(
-                                    'title' => esc_html__('Image', 'cdbbc'),
+                                    'title' => esc_html__('Image', 'cryptocurrency-donation-box'),
                                     'id' => 'image',
                                     'dependency' => array('enable', '==', true),
                                     'type' => 'upload',
@@ -705,7 +729,7 @@ if (class_exists('CSF')):
                                     'type' => 'number',
                                     'dependency' => array('enable', '==', true),
                                     'title' => 'Default Price',
-                                    'desc' => esc_html__('Default donation amount', 'cdbbc'),
+                                    'desc' => esc_html__('Default donation amount', 'cryptocurrency-donation-box'),
                                 ),
 
                             ),
@@ -725,7 +749,7 @@ if (class_exists('CSF')):
             'fields' => array(
                 array(
                     'id' => 'donation_settings_style',
-                    'title' => esc_html__('Coins/Tokens Style', 'cdbbc'),
+                    'title' => esc_html__('Coins/Tokens Style', 'cryptocurrency-donation-box'),
                     'type' => 'fieldset',
                     'dependency' => array('user_wallet', '!=', '', 'all'),
                     'fields' => array(
@@ -759,14 +783,18 @@ if (class_exists('CSF')):
                 ),
                 array(
                     'id' => 'wallet_notice',
-                    'title' => __('Wallet Notice', 'cdbbc'),
+                    'title' => __('Wallet Notice', 'cryptocurrency-donation-box'),
                     'type' => 'content',
-                    'content' => __('Please enter your Common Donation ETH Address For Wallets to access the rest of the settings. Click <a href="' . esc_url(get_admin_url(null, 'admin.php?page=cdbbc-crypto-donations#tab=quick-setup')) . '" target="_blank">here</a> to get redirected to the relevant page', 'cdbbc'),
+                    'content' => sprintf(
+                        /* translators: %s: URL for quick setup */
+                        __('Please enter your Common Donation ETH Address For Wallets to access the rest of the settings. Click <a href="%s" target="_blank">here</a> to get redirected to the relevant page', 'cryptocurrency-donation-box'),
+                        esc_url(get_admin_url(null, 'admin.php?page=cdbbc-crypto-donations#tab=quick-setup'))
+                    ),
                     'dependency' => array('user_wallet', '==', '', 'all'),
                 ),
                 array(
                     'id' => 'donation_wallet_style',
-                    'title' => esc_html__('Wallet Style', 'cdbbc'),
+                    'title' => esc_html__('Wallet Style', 'cryptocurrency-donation-box'),
                     'type' => 'fieldset',
                     'dependency' => array('user_wallet', '!=', '', 'all'),
                     'fields' => array(
@@ -824,14 +852,18 @@ if (class_exists('CSF')):
             'fields' => array(
                 array(
                     'id' => 'wallet_notice',
-                    'title' => __('Wallet Notice', 'cdbbc'),
+                    'title' => __('Wallet Notice', 'cryptocurrency-donation-box'),
                     'type' => 'content',
-                    'content' => __('Please enter your Common Donation ETH Address For Wallets to access the rest of the settings. Click <a href="' . esc_url(get_admin_url(null, 'admin.php?page=cdbbc-crypto-donations#tab=quick-setup')) . '" target="_blank">here</a> to get redirected to the relevant page', 'cdbbc'),
+                    'content' => sprintf(
+                        /* translators: %s: Link to the quick setup page */
+                        __('Please enter your Common Donation ETH Address For Wallets to access the rest of the settings. Click <a href="%s" target="_blank">here</a> to get redirected to the relevant page', 'cryptocurrency-donation-box'),
+                        esc_url(get_admin_url(null, 'admin.php?page=cdbbc-crypto-donations#tab=quick-setup'))
+                    ),
                     'dependency' => array('user_wallet', '==', '', 'all'),
                 ),
                 array(
                     'id' => 'tab_shortcode',
-                    'title' => esc_html__('Donation Box Shortcode Settings', 'cdbbc'),
+                    'title' => esc_html__('Donation Box Shortcode Settings', 'cryptocurrency-donation-box'),
                     'type' => 'fieldset',
                     'dependency' => array('user_wallet', '!=', '', 'all'),
                     'fields' => array(

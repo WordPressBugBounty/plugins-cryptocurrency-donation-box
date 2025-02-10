@@ -17,9 +17,9 @@ if ( ! class_exists( 'CSF_Field_gallery' ) ) {
     public function render() {
 
       $args = wp_parse_args( $this->field, array(
-        'add_title'   => esc_html__( 'Add Gallery', 'csf' ),
-        'edit_title'  => esc_html__( 'Edit Gallery', 'csf' ),
-        'clear_title' => esc_html__( 'Clear', 'csf' ),
+        'add_title'   => esc_html__( 'Add Gallery', 'cryptocurrency-donation-box' ),
+        'edit_title'  => esc_html__( 'Edit Gallery', 'cryptocurrency-donation-box' ),
+        'clear_title' => esc_html__( 'Clear', 'cryptocurrency-donation-box' ),
       ) );
 
       $hidden = ( empty( $this->value ) ) ? ' hidden' : '';

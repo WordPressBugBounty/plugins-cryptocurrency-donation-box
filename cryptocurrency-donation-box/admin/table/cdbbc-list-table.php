@@ -10,18 +10,18 @@ class Cdbbc_donation_list extends WP_List_Table
     {
         $columns = array(
             'id' => '#',
-            'transaction_id' => __("Transaction Id", "cdbbc"),
-            'sender' => __("Sender", "cdbbc"),
-            'recever' => __("Reciever", "cdbbc"),
-            'currency' => __("Currency", "cdbbc"),
-            'amount' => __("Amount", "cdbbc"),
-            'wallet_name' => __("Wallet", "cdbbc"),
-            'network' => __("Network", "cdbbc"),
-            'payment_status' => __("Payment Status", "cdbbc"),
-            'user_email' => __("Email", "cdbbc"),
-            'transaction_status' => __("Transaction Status", "cdbbc"),
-            'blockchain' => __("Blockchain", "cdbbc"),
-            'last_updated' => __("Last Updated", "cdbbc"),
+            'transaction_id' => __("Transaction Id", 'cryptocurrency-donation-box'),
+            'sender' => __("Sender", 'cryptocurrency-donation-box'),
+            'recever' => __("Reciever", 'cryptocurrency-donation-box'),
+            'currency' => __("Currency", 'cryptocurrency-donation-box'),
+            'amount' => __("Amount", 'cryptocurrency-donation-box'),
+            'wallet_name' => __("Wallet", 'cryptocurrency-donation-box'),
+            'network' => __("Network", 'cryptocurrency-donation-box'),
+            'payment_status' => __("Payment Status", 'cryptocurrency-donation-box'),
+            'user_email' => __("Email", 'cryptocurrency-donation-box'),
+            'transaction_status' => __("Transaction Status", 'cryptocurrency-donation-box'),
+            'blockchain' => __("Blockchain", 'cryptocurrency-donation-box'),
+            'last_updated' => __("Last Updated", 'cryptocurrency-donation-box'),
         );
         return $columns;
     }
@@ -29,58 +29,66 @@ class Cdbbc_donation_list extends WP_List_Table
     public function prepare_items()
     {
         global $wpdb, $_wp_column_headers;
-
+    
         $columns = $this->get_columns();
         $hidden = array();
         $sortable = $this->get_sortable_columns();
         $this->_column_headers = array($columns, $hidden, $sortable);
-
-        $query = 'SELECT * FROM ' . $wpdb->base_prefix . 'cdbbc_transaction';
-
+    
+        // Sanitize and initialize variables
         $user_search_keyword = isset($_REQUEST['s']) ? wp_unslash(trim($_REQUEST['s'])) : '';
-
-        if (!empty($user_search_keyword)) {
-            $query .= $wpdb->prepare(' WHERE ( user_email LIKE %s OR selected_network LIKE %s OR currency LIKE %s)', "%{$user_search_keyword}%", "%{$user_search_keyword}%", "%{$user_search_keyword}%");
-        }
-
         $allowed_order_columns = array('id', 'last_updated');
         $allowed_order_direction = array('ASC', 'DESC');
-
-        $orderby = isset($_REQUEST["orderby"]) && in_array($_REQUEST["orderby"], $allowed_order_columns) ? esc_sql($_REQUEST["orderby"]) : 'last_updated';
-        $order = isset($_REQUEST["order"]) && in_array($_REQUEST["order"], $allowed_order_direction) ? esc_sql($_REQUEST["order"]) : 'DESC';
-
+        $orderby = isset($_REQUEST["orderby"]) && in_array($_REQUEST["orderby"], $allowed_order_columns, true) 
+        ? sanitize_key($_REQUEST["orderby"]) 
+        : 'last_updated';
+    
+        $order = isset($_REQUEST["order"]) && in_array($_REQUEST["order"], $allowed_order_direction, true) 
+        ? sanitize_key($_REQUEST["order"]) 
+        : 'DESC';
+    
+        // Construct the base query
+        $base_table = esc_sql($wpdb->base_prefix . 'cdbbc_transaction');
+        $query = "SELECT * FROM $base_table";
+        $where_clauses = [];
+    
+        // Add search filter if provided
+        if (!empty($user_search_keyword)) {
+            $like_keyword = '%' . $wpdb->esc_like($user_search_keyword) . '%';
+            $where_clauses[] = $wpdb->prepare('(user_email LIKE %s OR selected_network LIKE %s OR currency LIKE %s)', $like_keyword, $like_keyword, $like_keyword);
+        }
+    
+        // Append WHERE clauses
+        if (!empty($where_clauses)) {
+            $query .= ' WHERE ' . implode(' AND ', $where_clauses);
+        }
+    
+        // Add ORDER BY clause
         if (!empty($orderby) && !empty($order)) {
-            $query .= " ORDER BY $orderby $order";
+            $query .= " ORDER BY $orderby $order"; // Ensure $orderby and $order are validated earlier
         }
-
-        $totalitems = $wpdb->query($query);
+    
+        // Count total items for pagination
+        $count_query = str_replace('SELECT *', 'SELECT COUNT(*)', $query);
+        $totalitems = $wpdb->get_var($count_query);
+    
+        // Pagination
         $perpage = 10;
-        if (!is_numeric($perpage) || empty($perpage)) {
-            $perpage = 10;
-        }
-
-        $paged = !empty($_REQUEST["paged"]) ? esc_sql($_REQUEST["paged"]) : false;
-
-        if (empty($paged) || !is_numeric($paged) || $paged <= 0) {
-            $paged = 1;
-        }
-        $totalpages = ceil($totalitems / $perpage);
-
-        if (!empty($paged) && !empty($perpage)) {
-            $offset = ($paged - 1) * $perpage;
-            $query .= $wpdb->prepare(' LIMIT %d, %d', $offset, $perpage);
-        }
-
-       
+        $paged = isset($_REQUEST["paged"]) && is_numeric($_REQUEST["paged"]) && $_REQUEST["paged"] > 0 ? (int) $_REQUEST["paged"] : 1;
+        $offset = ($paged - 1) * $perpage;
+        $query .= $wpdb->prepare(' LIMIT %d, %d', $offset, $perpage);
+    
+        // Set pagination arguments
         $this->set_pagination_args(array(
             "total_items" => $totalitems,
-            "total_pages" => $totalpages,
-            "per_page" => $perpage,
+            "total_pages" => ceil($totalitems / $perpage),
+            "per_page"    => $perpage,
         ));
-
-     
+    
+        // Fetch results
         $this->items = $wpdb->get_results($query);
     }
+    
 
     public function column_default($item, $column_name)
     {

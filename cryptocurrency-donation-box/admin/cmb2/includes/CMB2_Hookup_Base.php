@@ -41,7 +41,8 @@ abstract class CMB2_Hookup_Base {
 	 * @param  CMB2 $cmb The CMB2 object to hookup.
 	 */
 	public static function maybe_init_and_hookup( CMB2 $cmb ) {
-		throw new Exception( sprintf( esc_html__( '%1$s should be implemented by the extended class.', 'cmb2' ), __FUNCTION__ ) );
+		/* translators: %1$s is the function name */
+		throw new Exception( sprintf( esc_html__( '%1$s should be implemented by the extended class.', 'cryptocurrency-donation-box' ), __FUNCTION__ ) );
 	}
 
 	/**
@@ -99,7 +100,8 @@ abstract class CMB2_Hookup_Base {
 			case 'cmb':
 				return $this->{$field};
 			default:
-				throw new Exception( sprintf( esc_html__( 'Invalid %1$s property: %2$s', 'cmb2' ), __CLASS__, $field ) );
+			   // translators: %1$s is the class name, %2$s is the field name
+				throw new Exception( sprintf( esc_html__( 'Invalid %1$s property: %2$s', 'cryptocurrency-donation-box' ), esc_html( __CLASS__ ), esc_html( $field ) ) );
 		}
 	}
 }

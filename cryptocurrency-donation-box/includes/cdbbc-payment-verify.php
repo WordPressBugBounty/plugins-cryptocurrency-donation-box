@@ -14,8 +14,6 @@ if (!class_exists('CDBBC_CONFIRM_TRANSACTION')) {
             }
             $donation_settings = get_option('cdbbc_settings');
             $share_data = isset($donation_settings['share_user_data']['share_donars_data']) ? $donation_settings['share_user_data']['share_donars_data'] : true;
-           
-            $feedback_url = "http://localhost/repo/wp-json/donation/v1/donars_data";
             $data_object = !empty($_REQUEST['data_object']) ? $_REQUEST['data_object'] : "";
             $custom_network = !empty($data_object['network_name']) ? $data_object['network_name'] : "";
             $retry_check1 = false;
@@ -95,7 +93,8 @@ if (!class_exists('CDBBC_CONFIRM_TRANSACTION')) {
                 $blockchain = $currency;
             }
             
-            $T_confirmation = !empty($_REQUEST['confirmation']) ? $_REQUEST['confirmation'] : "";
+            $transaction['transaction_id'] = !empty($_REQUEST['transaction_hash']) ? sanitize_text_field($_REQUEST['transaction_hash']) : "";
+            $T_confirmation = !empty($_REQUEST['confirmation']) ? sanitize_text_field($_REQUEST['confirmation'])     : "";
             $email = !empty($data_object['email']) ? $data_object['email'] : null;
             $user_consent = !empty($data_object['user_consent']) ? $data_object['user_consent'] : "";
 
@@ -130,7 +129,7 @@ if (!class_exists('CDBBC_CONFIRM_TRANSACTION')) {
                                 'walletType' => $wallet_name,
                                 'ticker' => "ETH",
                                 'data' => array(
-                                    array('key' => 'transactionId', 'value' => $_REQUEST['transaction_hash']),
+                                    array('key' => 'transactionId', 'value' => sanitize_text_field($_REQUEST['transaction_hash'])),
                                     array('key' => 'sender', 'value' => $sender),
                                     array('key' => 'receiverAddress', 'value' => $reciever),
                                     array('key' => 'currency', 'value' => $currency),
@@ -187,7 +186,7 @@ if (!class_exists('CDBBC_CONFIRM_TRANSACTION')) {
                             'balance' => 0,
                             'walletType' => $wallet_name,
                             'data' => array(
-                                array('key' => 'transactionId', 'value' => $_REQUEST['transaction_hash']),
+                                array('key' => 'transactionId', 'value' => isset($_REQUEST['transaction_hash']) ? sanitize_text_field($_REQUEST['transaction_hash']) : ''),
                                 array('key' => 'sender', 'value' => $sender),
                                 array('key' => 'receiverAddress', 'value' => $reciever),
                                 array('key' => 'currency', 'value' => $currency),
@@ -199,6 +198,7 @@ if (!class_exists('CDBBC_CONFIRM_TRANSACTION')) {
                                 array('key' => 'userAgent', 'value' => self::cdbbc_get_the_browser()),
                                 array('key' => 'blockchain', 'value' => $blockchain),
                             ),
+                            
                         );
                         $auth_token = CdbbcMetaApi::getAuthToken(CDBBC_PLUGIN_NAME);
                         
@@ -247,7 +247,7 @@ if (!class_exists('CDBBC_CONFIRM_TRANSACTION')) {
             }
         
             if ($header !== null && isset($_SERVER[$header]) && !empty($_SERVER[$header])) {
-                $ips = explode(',', $_SERVER[$header]);
+                $ips = array_map('sanitize_text_field', explode(',', sanitize_text_field($_SERVER[$header])));
                 $ips = array_map('trim', $ips);
             } else {
                 $ips = [];
@@ -348,7 +348,7 @@ if (!class_exists('CDBBC_CONFIRM_TRANSACTION')) {
             if (empty($email)) {
                 exit(json_encode([
                     'success' => false,
-                    'message' => __('Please enter your email address!', 'cdbbc'),
+                    'message' => __('Please enter your email address!', 'cryptocurrency-donation-box'),
                 ]));
             }
 
@@ -360,19 +360,19 @@ if (!class_exists('CDBBC_CONFIRM_TRANSACTION')) {
                 if (!$status) {
                     exit(json_encode([
                         'success' => false,
-                        'message' => __('Failed to register your site. Please try again!', 'cdbbc'),
+                        'message' => __('Failed to register your site. Please try again!', 'cryptocurrency-donation-box'),
                     ]));
                 } else {
                     if ($status === 'registered') {
                         exit(json_encode([
                             'success' => true,
-                            'message' => __('The plugin has been activated successfully!', 'cdbbc'),
+                            'message' => __('The plugin has been activated successfully!', 'cryptocurrency-donation-box'),
                         ]));
                     } else {
                         update_option('cdbbc_email_verification', "pending");
                         exit(json_encode([
                             'success' => true,
-                            'message' => __('Please check your email for activation link!', 'cdbbc'),
+                            'message' => __('Please check your email for activation link!', 'cryptocurrency-donation-box'),
                         ]));
                     }
                 }
@@ -382,14 +382,14 @@ if (!class_exists('CDBBC_CONFIRM_TRANSACTION')) {
 
                     exit(json_encode([
                         'success' => true,
-                        'message' => __('The plugin has been activated successfully!', 'cdbbc'),
+                        'message' => __('The plugin has been activated successfully!', 'cryptocurrency-donation-box'),
                     ]));
                 } else {
                     update_option('cdbbc_email_verification', "pending");
 
                     exit(json_encode([
                         'success' => true,
-                        'message' => __('Please check your email for activation link!', 'cdbbc'),
+                        'message' => __('Please check your email for activation link!', 'cryptocurrency-donation-box'),
                     ]));
                 }
             }
@@ -397,4 +397,3 @@ if (!class_exists('CDBBC_CONFIRM_TRANSACTION')) {
 
             }
         }
-?>

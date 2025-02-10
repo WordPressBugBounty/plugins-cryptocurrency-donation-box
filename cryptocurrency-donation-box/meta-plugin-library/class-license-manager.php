@@ -1,5 +1,5 @@
 <?php
-
+if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 /**
  * DonationBoxPluginLicenseManager
  *
@@ -28,8 +28,8 @@ final class DonationBoxPluginLicenseManager
 		$this->logo = 'cryptodonation-logo.png';
 		$this->plugin_name = CDBBC_PLUGIN_NAME;
 		$this->activation_submenu_url = 'cdbbc-crypto-donations';
-		$this->plugin_name_no_space = 'cdbbc';
-		$this->plugin_name_camel_case = 'cdbbc';
+		$this->plugin_name_no_space = 'cryptocurrency-donation-box';
+		$this->plugin_name_camel_case = 'cryptocurrency-donation-box';
         $this->activated_clause = 'cdbbc_activated';
 		$this->rest_api_class = 'CdbbcMetaApi';
 		$this->activation_url = 'admin.php?page=cdbbc-activation';
@@ -74,8 +74,16 @@ final class DonationBoxPluginLicenseManager
 		}
 
 		if (!get_option($this->activated_clause)) {
-			$this->hook_name = add_submenu_page($this->activation_submenu_url, __('Plugin Activation', $this->plugin_name), __('Plugin Activation', $this->plugin_name), 'manage_options', $this->plugin_name_no_space . '-activation', array($this, 'render'));
+			$this->hook_name = add_submenu_page(
+				$this->activation_submenu_url,
+				__('Plugin Activation', 'cryptocurrency-donation-box'),
+				__('Plugin Activation', 'cryptocurrency-donation-box'), 
+				'manage_options',
+				$this->plugin_name_no_space . '-activation',
+				array($this, 'render')
+			);
 		}
+		
 	}
 
 	/**
@@ -110,32 +118,49 @@ final class DonationBoxPluginLicenseManager
         
 
 ?>
-        <div class="wrap <?=__($this->plugin_name)?>-activation-page">
-				<div class="card-top">
-				<img class="img" src="<?php echo esc_url($this->plugin_url . 'assets/images/' . $this->logo); ?>" alt="Logo">
-				<p id="messager" class="description">
-                    <?= __('One more minute, please accept our Terms & Conditions!', $this->plugin_name) ?>
-                    <br>
-                    You will be directed to connect your wallet to activate the plugin
-                </p>
-				<form method="POST" action="">
-					
-					<label>
-						<input id="registration_email" type="hidden" name="registration_email" value="<?= $admin_email ?>">
-					</label>
-					<label>
-						<input id="accept_tos" type="checkbox" name="accept_tos" value="1">
-						<span><?php echo sprintf(__('I agree to the %sTerms & Conditions%s.', $this->plugin_name), '<a href="' . admin_url() . 'admin.php?page=cdbbc-crypto-donations#tab=terms-conditions" target="_blank">', '</a>'); ?></span>
-					</label>
-					
-					<div class="card-bottom">
-						<button id="meta-plugin-activate-btn" class="button button-primary" type="submit" data-plugin=<?=__($this->plugin_name)?>><?= __('Activate', $this->plugin_name) ?></button>
-						<a class="to-dashboard" href="<?= admin_url() ?>">&larr; <?= __('Back to dashboard', $this->plugin_name) ?></a>	
-					</div>
-                    <p class="permalink"><?= __('Make sure to use <b>Settings >> Permalinks >> Post name (/%postname%/)</b> before activating this plugin. ', $this->plugin_name) ?></p>
-				</form>
-			</div>
+	<div class="wrap <?php echo esc_attr($this->plugin_name_no_space); ?>-activation-page">
+		<div class="card-top">
+			<img class="img" src="<?php echo esc_url($this->plugin_url . 'assets/images/' . $this->logo); ?>" alt="Logo">
+			<p id="messager" class="description">
+				<?php echo esc_html__('One more minute, please accept our Terms & Conditions!', 'cryptocurrency-donation-box'); ?>
+				<br>
+				<?php echo esc_html__('You will be directed to connect your wallet to activate the plugin.', 'cryptocurrency-donation-box'); ?>
+			</p>
+
+			<form method="POST" action="">
+				<label>
+					<input id="registration_email" type="hidden" name="registration_email" value="<?php echo esc_attr($admin_email); ?>">
+				</label>
+				<label>
+					<input id="accept_tos" type="checkbox" name="accept_tos" value="1">
+					<span>
+					<?php 
+						// translators: %s represents the opening and closing anchor tags for the Terms & Conditions link.
+						echo sprintf(
+							esc_html__('I agree to the %sTerms & Conditions%s.', 'cryptocurrency-donation-box'),
+							'<a href="' . esc_url(admin_url('admin.php?page=cdbbc-crypto-donations#tab=terms-conditions')) . '" target="_blank">',
+							'</a>'
+						); 
+					?>
+
+					</span>
+
+				</label>
+				<div class="card-bottom">
+					<button id="meta-plugin-activate-btn" class="button button-primary" type="submit" data-plugin="<?php echo esc_attr($this->plugin_name); ?>">
+						<?php echo esc_html(__('Activate', 'cryptocurrency-donation-box')); ?>
+					</button>
+					<a class="to-dashboard" href="<?php echo esc_url(admin_url()); ?>">
+						&larr; <?php echo esc_html__( 'Back to dashboard', 'cryptocurrency-donation-box'); ?>
+					</a>
+				</div>
+				<p class="permalink">
+					<?php echo __('Make sure to use <b>Settings >> Permalinks >> Post name (/%postname%/)</b> before activating this plugin.','cryptocurrency-donation-box' ); ?>
+				</p>
+			</form>
 		</div>
+	</div>
+
 <?php
 
 

@@ -185,11 +185,11 @@ class CMB2_Hookup extends CMB2_Hookup_Base {
 
 	public function term_hooks() {
 		if ( ! function_exists( 'get_term_meta' ) ) {
-			wp_die( esc_html__( 'Term Metadata is a WordPress 4.4+ feature. Please upgrade your WordPress install.', 'cmb2' ) );
+			wp_die( esc_html__( 'Term Metadata is a WordPress 4.4+ feature. Please upgrade your WordPress install.', 'cryptocurrency-donation-box' ) );
 		}
 
 		if ( ! $this->cmb->prop( 'taxonomies' ) ) {
-			wp_die( esc_html__( 'Term metaboxes configuration requires a "taxonomies" parameter.', 'cmb2' ) );
+			wp_die( esc_html__( 'Term metaboxes configuration requires a "taxonomies" parameter.', 'cryptocurrency-donation-box' ) );
 		}
 
 		$this->taxonomies = (array) $this->cmb->prop( 'taxonomies' );
@@ -556,27 +556,35 @@ class CMB2_Hookup extends CMB2_Hookup_Base {
 				? ' hide-if-js'
 				: '';
 		}
+		// translators: %s represents the panel title.
+		$toggle_button = '<button type="button" class="handlediv button-link" aria-expanded="true">
+			<span class="screen-reader-text">' . sprintf(
+			/* translators: %s represents the panel title. */
+			__( 'Toggle panel: %s', 'cryptocurrency-donation-box' ), 
+			$title 
+			) . '</span>
+			<span class="toggle-indicator" aria-hidden="true"></span>
+		</button>';
 
-		$toggle_button = '<button type="button" class="handlediv button-link" aria-expanded="true"><span class="screen-reader-text">' . sprintf( __( 'Toggle panel: %s' ), $title ) . '</span><span class="toggle-indicator" aria-hidden="true"></span></button>';
 		$title_tag = '<h2 class="hndle"><span>' . esc_attr( $title ) . '</span></h2>' . "\n";
 
-		echo '<div id="' . $cmb_id . '" class="' . postbox_classes( $cmb_id, $page ) . $hidden_class . '">' . "\n";
+		echo '<div id="' . esc_attr( $cmb_id ) . '" class="' . esc_attr( postbox_classes( $cmb_id, $page ) ) . esc_attr( $hidden_class ) . '">' . "\n";
 
 		if ( $add_handle ) {
 
 			if ( $is_55 ) {
 				echo '<div class="postbox-header">';
-				echo $title_tag;
+				echo esc_html( $title_tag );
 
 				echo '<div class="handle-actions hide-if-no-js">';
-				echo $toggle_button;
+				echo esc_html( $toggle_button );
 				echo '</div>';
 
 				echo '</div>' . "\n";
 
 			} else {
-				echo $toggle_button;;
-				echo $title_tag;
+				echo esc_html( $toggle_button );
+				echo esc_html( $title_tag );
 			}
 
 			echo '<div class="inside">' . "\n";
